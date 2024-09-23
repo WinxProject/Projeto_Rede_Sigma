@@ -1,0 +1,14 @@
+/* src/pages/ManufacturersPage.css */
+.manufacturers-page {
+    padding: 20px;
+}
+
+.manufacturers-page h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.manufacturers-page p {
+    font-size: 1rem;
+    color: #666;
+}

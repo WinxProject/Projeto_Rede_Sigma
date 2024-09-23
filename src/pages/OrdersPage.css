@@ -1,0 +1,14 @@
+/* src/pages/OrdersPage.css */
+.orders-page {
+    padding: 20px;
+}
+
+.orders-page h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.orders-page p {
+    font-size: 1rem;
+    color: #666;
+}

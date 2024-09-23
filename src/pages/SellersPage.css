@@ -1,0 +1,14 @@
+/* src/pages/SellersPage.css */
+.sellers-page {
+    padding: 20px;
+}
+
+.sellers-page h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.sellers-page p {
+    font-size: 1rem;
+    color: #666;
+}

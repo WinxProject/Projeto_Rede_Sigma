@@ -1,0 +1,25 @@
+.clients-page {
+    padding: 20px;
+  }
+  
+  .clients-page h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .clients-page ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .clients-page li {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .clients-page button {
+    margin-left: 10px;
+  }
+  

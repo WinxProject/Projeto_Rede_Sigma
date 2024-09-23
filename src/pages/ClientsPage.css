@@ -1,0 +1,152 @@
+/* ClientsPage.css */
+.clients-page {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.client-form {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.client-form input {
+  flex: 1;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.client-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.client-form button:hover {
+  background-color: #45a049;
+}
+
+.search-sort {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-sort input[type="text"] {
+  flex: 1;
+  margin-right: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.search-sort button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.search-sort button:hover {
+  background-color: #45a049;
+}
+
+.search-sort select {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.client-list {
+  margin-top: 20px;
+}
+
+.client-list-header {
+  display: flex;
+  background-color: #f1f1f1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.client-list-header span {
+  flex: 1;
+  text-align: center;
+  font-weight: bold;
+}
+
+.client-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.client-list li {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.client-list li span {
+  flex: 1;
+  text-align: center;
+}
+
+.client-list .actions {
+  display: flex;
+  gap: 10px;
+}
+
+.client-list button {
+  border: none;
+  border-radius: 4px;
+  padding: 8px 9px;
+  cursor: pointer;
+}
+
+.client-list button:hover {
+  opacity: 0.8;
+}
+
+.client-list button:first-child {
+  background-color: #4CAF50; /* Cor para o botão de edição */
+  color: white;
+}
+
+.client-list button:first-child:hover {
+  background-color: #45a049;
+}
+
+.client-list button:last-child {
+  background-color: #f44336; /* Cor para o botão de exclusão */
+  color: white;
+}
+
+.client-list button:last-child:hover {
+  background-color: #e53935;
+}

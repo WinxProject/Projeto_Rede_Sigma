@@ -1,0 +1,74 @@
+/* NavMenu.css */
+.nav-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  background-color: #333;
+  color: white;
+  overflow: hidden;
+  transition: width 0.3s ease;
+  z-index: 1000;
+}
+
+.nav-menu.closed {
+  width: 80px; /* Tamanho reduzido quando fechado */
+}
+
+.nav-menu.open {
+  width: 250px; /* Tamanho expandido quando aberto */
+}
+
+.menu-toggle {
+  background-color: #444;
+  color: white;
+  border: none;
+  padding: 15px;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 1px solid #555;
+}
+
+.menu-toggle:hover {
+  background-color: #575757;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+.nav-menu.closed .menu-list {
+  opacity: 0;
+  pointer-events: none; /* Impede a interação com o menu quando fechado */
+}
+
+.menu-list li {
+  margin: 0;
+}
+
+.menu-list a {
+  color: white;
+  text-decoration: none;
+  padding: 15px 20px;
+  display: block;
+  border-bottom: 1px solid #444;
+  transition: background-color 0.3s ease;
+}
+
+.menu-list a:hover {
+  background-color: #575757;
+  border-radius: 4px;
+}
+
+.menu-list a.active {
+  background-color: #007bff;
+  color: white;
+}
