@@ -1,9 +1,11 @@
-/* ClientsPage.css */
 .clients-page {
   padding: 20px;
   max-width: 1000px;
   margin: 0 auto;
+  top: 5px;
   font-family: Arial, sans-serif;
+  position: relative; /* Para garantir que os elementos se comportem adequadamente */
+  z-index: 1; /* Garante que o conteúdo fique acima da barra lateral */
 }
 
 .client-form {
@@ -14,6 +16,8 @@
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
+  position: relative; /* Para evitar problemas de sobreposição */
+  z-index: 2; /* Mantém a forma do formulário acima do fundo */
 }
 
 .client-form input {
@@ -23,6 +27,7 @@
   border-radius: 4px;
   border: 1px solid #ccc;
   font-size: 16px;
+  min-width: 200px;
 }
 
 .client-form button {
@@ -34,6 +39,7 @@
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 .client-form button:hover {
@@ -44,15 +50,18 @@
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
-.search-sort input[type="text"] {
+.search-sort input[type="text"],
+.search-sort select {
   flex: 1;
   margin-right: 10px;
   padding: 10px;
   border-radius: 4px;
   border: 1px solid #ccc;
   font-size: 16px;
+  min-width: 150px;
 }
 
 .search-sort button {
@@ -62,19 +71,11 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-right: 10px;
+  margin-left: 10px;
 }
 
 .search-sort button:hover {
   background-color: #45a049;
-}
-
-.search-sort select {
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  margin-right: 10px;
 }
 
 .client-list {
@@ -127,6 +128,7 @@
   border-radius: 4px;
   padding: 8px 9px;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .client-list button:hover {
@@ -134,7 +136,7 @@
 }
 
 .client-list button:first-child {
-  background-color: #4CAF50; /* Cor para o botão de edição */
+  background-color: #4CAF50; 
   color: white;
 }
 
@@ -143,10 +145,39 @@
 }
 
 .client-list button:last-child {
-  background-color: #f44336; /* Cor para o botão de exclusão */
+  background-color: #f44336; 
   color: white;
 }
 
 .client-list button:last-child:hover {
   background-color: #e53935;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .client-form,
+  .search-sort {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .client-form input,
+  .search-sort input[type="text"],
+  .search-sort select,
+  .search-sort button {
+    margin: 5px 0;
+    width: 100%;
+  }
+
+  .client-list li {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  .client-list button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+  }
 }

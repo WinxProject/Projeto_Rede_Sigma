@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'; // Adicionado para navegação
 import './OperationsPage.css';
+import NavMenu from './NavMenu'; // Importado o NavMenu
 
 function OperationsPage() {
   const [operations, setOperations] = useState([]);
@@ -88,7 +90,9 @@ function OperationsPage() {
   const filteredOperations = hasSearched ? handleSearch() : operations;
 
   return (
+    
     <div className="operations-page">
+      <NavMenu /> {/* Adicionado o NavMenu */}
       <h1>Controle de Operações</h1>
 
       {successMessage && <div className="success-message">{successMessage}</div>}

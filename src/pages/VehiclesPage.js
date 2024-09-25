@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import NavMenu from './NavMenu'; // Importar o NavMenu
+import NavMenu from './NavMenu';
 import './VehiclesPage.css';
 
 const VehiclesPage = () => {
-  const [vehicles, setVehicles] = useState([]);
-  const [form, setForm] = useState({
+  const [vehicleList, setVehicleList] = useState([]);
+  const [vehicleForm, setVehicleForm] = useState({
     plate: '',
     brand: '',
     model: '',
@@ -13,195 +13,121 @@ const VehiclesPage = () => {
     color: '',
     chassis: ''
   });
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchCriteria, setSearchCriteria] = useState('all');
-  const [sortOrder, setSortOrder] = useState('brand');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchOption, setSearchOption] = useState('all');
+  const [filteredVehicleList, setFilteredVehicleList] = useState([]);
+  const [confirmationMessage, setConfirmationMessage] = useState('');
+  const [isPopupVisible, setIsPopupVisible] = useState(false); // Estado para controlar o popup
 
-  // Load vehicles from localStorage on component mount
   useEffect(() => {
     const savedVehicles = JSON.parse(localStorage.getItem('vehicles')) || [];
-    setVehicles(savedVehicles);
+    setVehicleList(savedVehicles);
   }, []);
 
-  // Save vehicles to localStorage whenever vehicles state changes
   useEffect(() => {
-    localStorage.setItem('vehicles', JSON.stringify(vehicles));
-  }, [vehicles]);
+    localStorage.setItem('vehicles', JSON.stringify(vehicleList));
+  }, [vehicleList]);
 
-  const formatPrice = (value) => {
-    const numericValue = value.replace(/[^\d]/g, '');
-    const integerPart = numericValue.slice(0, -2);
-    const decimalPart = numericValue.slice(-2);
-    const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    return `R$ ${formattedInteger},${decimalPart}`;
-  };
-
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-    if (name === 'price') {
-      setForm(prevForm => ({ ...prevForm, [name]: formatPrice(value) }));
-    } else {
-      setForm(prevForm => ({ ...prevForm, [name]: value }));
-    }
+    setVehicleForm(prevForm => ({ ...prevForm, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
-    if (form.plate && form.brand && form.model && form.year && form.price && form.color && form.chassis) {
-      setVehicles(prevVehicles => [...prevVehicles, form]);
-      setForm({ plate: '', brand: '', model: '', year: '', price: '', color: '', chassis: '' });
+    if (vehicleForm.plate && vehicleForm.brand && vehicleForm.model && vehicleForm.year && vehicleForm.price && vehicleForm.color && vehicleForm.chassis) {
+      setVehicleList(prevList => [...prevList, vehicleForm]);
+      setVehicleForm({ plate: '', brand: '', model: '', year: '', price: '', color: '', chassis: '' });
+      setConfirmationMessage('Veículo cadastrado com sucesso!');
+      setTimeout(() => setConfirmationMessage(''), 3000);
     }
-  };
-
-  const handleEdit = (index) => {
-    const vehicleToEdit = vehicles[index];
-    setForm(vehicleToEdit);
-    setVehicles(vehicles.filter((_, i) => i !== index));
-  };
-
-  const handleDelete = (index) => {
-    setVehicles(vehicles.filter((_, i) => i !== index));
   };
 
   const handleSearch = () => {
-    if (searchCriteria === 'all') {
-      return vehicles;
-    }
-    return vehicles.filter(vehicle =>
-      vehicle[searchCriteria].toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const results = searchOption === 'all' 
+      ? vehicleList.filter(vehicle => 
+          vehicle.plate.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          vehicle.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          vehicle.model.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      : vehicleList.filter(vehicle => 
+          vehicle[searchOption].toLowerCase().includes(searchQuery.toLowerCase())
+        );
+
+    setFilteredVehicleList(results);
+    setIsPopupVisible(results.length > 0); // Exibe o popup se houver resultados
   };
 
-  const sortedVehicles = handleSearch().sort((a, b) => {
-    if (sortOrder === 'brand-model') {
-      if (a.brand === b.brand) {
-        return a.model.localeCompare(b.model);
-      }
-      return a.brand.localeCompare(b.brand);
-    }
-    return a[sortOrder].localeCompare(b[sortOrder]);
-  });
+  const handleEdit = (index) => {
+    const vehicleToEdit = filteredVehicleList[index];
+    setVehicleForm(vehicleToEdit);
+    setVehicleList(vehicleList.filter(vehicle => vehicle !== vehicleToEdit)); // Remove do estado original
+    setIsPopupVisible(false); //aqui estou fechando o popup
+  };
+
+  const handleDelete = (index) => {
+    setVehicleList(vehicleList.filter((_, i) => i !== index));
+    setIsPopupVisible(false); // Fecha o popup
+  };
 
   return (
-    <div className="vehicles-page">
-      <NavMenu /> {/* Adicionado o NavMenu */}
+    <div className="vehicles-container10">
+      <NavMenu />
       <h1>Controle de Veículos Disponíveis para Venda</h1>
-      <form onSubmit={handleSubmit} className="vehicle-form">
-        <input
-          type="text"
-          name="plate"
-          value={form.plate}
-          onChange={handleChange}
-          placeholder="Placa"
-          required
+      {confirmationMessage && <div className="confirmation-message10">{confirmationMessage}</div>}
+      
+      <div className="search-container10">
+        <input 
+          type="text" 
+          value={searchQuery} 
+          onChange={(e) => setSearchQuery(e.target.value)} 
+          placeholder="Buscar..." 
         />
-        <input
-          type="text"
-          name="brand"
-          value={form.brand}
-          onChange={handleChange}
-          placeholder="Marca"
-          required
-        />
-        <input
-          type="text"
-          name="model"
-          value={form.model}
-          onChange={handleChange}
-          placeholder="Modelo"
-          required
-        />
-        <input
-          type="number"
-          name="year"
-          value={form.year}
-          onChange={handleChange}
-          placeholder="Ano"
-          required
-        />
-        <input
-          type="text"
-          name="price"
-          value={form.price}
-          onChange={handleChange}
-          placeholder="Preço (R$)"
-          required
-        />
-        <input
-          type="text"
-          name="color"
-          value={form.color}
-          onChange={handleChange}
-          placeholder="Cor"
-          required
-        />
-        <input
-          type="text"
-          name="chassis"
-          value={form.chassis}
-          onChange={handleChange}
-          placeholder="Número de Chassi"
-          required
-        />
-        <button type="submit">Adicionar Veículo</button>
-      </form>
-      <div className="search-sort">
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Buscar..."
-        />
-        <select
-          value={searchCriteria}
-          onChange={(e) => setSearchCriteria(e.target.value)}
-        >
+        <select value={searchOption} onChange={(e) => setSearchOption(e.target.value)}>
           <option value="all">Todos</option>
           <option value="plate">Placa</option>
           <option value="brand">Marca</option>
           <option value="model">Modelo</option>
         </select>
-        <button onClick={handleSearch}>Buscar</button>
-        <select
-          value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value)}
-        >
-          <option value="brand">Ordenar por Marca</option>
-          <option value="model">Ordenar por Modelo</option>
-          <option value="brand-model">Ordenar por Marca e Modelo</option>
-        </select>
+        <button className='btnbuscar10' onClick={handleSearch}>Buscar</button>
       </div>
-      <div className="vehicle-list">
-        <div className="vehicle-list-header">
-          <span>Placa</span>
-          <span>Marca</span>
-          <span>Modelo</span>
-          <span>Ano</span>
-          <span>Preço</span>
-          <span>Cor</span>
-          <span>Chassi</span>
-          <span>Ações</span>
+
+      <form onSubmit={handleFormSubmit} className="vehicle-input-form10">
+        <input type="text" name="plate" value={vehicleForm.plate} onChange={handleInputChange} placeholder="Placa" required />
+        <input type="text" name="brand" value={vehicleForm.brand} onChange={handleInputChange} placeholder="Marca" required />
+        <input type="text" name="model" value={vehicleForm.model} onChange={handleInputChange} placeholder="Modelo" required />
+        <input type="number" name="year" value={vehicleForm.year} onChange={handleInputChange} placeholder="Ano" required />
+        <input type="text" name="price" value={vehicleForm.price} onChange={handleInputChange} placeholder="Preço (R$)" required />
+        <input type="text" name="color" value={vehicleForm.color} onChange={handleInputChange} placeholder="Cor" required />
+        <input type="text" name="chassis" value={vehicleForm.chassis} onChange={handleInputChange} placeholder="Número de Chassi" required />
+        <button type="submit">Adicionar Veículo</button>
+      </form>
+
+      {isPopupVisible && (
+        <div className="popup-overlay10">
+          <div className="popup-content10">
+            <h2>Resultados da Busca</h2>
+            <ul className="vehicle-list10">
+              {filteredVehicleList.map((vehicle, index) => (
+                <li key={index}>
+                  <div className="vehicle-info10">Placa: {vehicle.plate}</div>
+                  <div className="vehicle-info10">Marca: {vehicle.brand}</div>
+                  <div className="vehicle-info10">Modelo: {vehicle.model}</div>
+                  <div className="vehicle-info10">Ano: {vehicle.year}</div>
+                  <div className="vehicle-info10">Preço: {vehicle.price}</div>
+                  <div className="vehicle-info10">Cor: {vehicle.color}</div>
+                  <div className="vehicle-info10">Chassi: {vehicle.chassis}</div>
+                  <div className="action-buttons10">
+                    <button className='btneditar' onClick={() => handleEdit(index)}>Editar</button>
+                    <button className='btnexcluir' onClick={() => handleDelete(index)}>Excluir</button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <button onClick={() => setIsPopupVisible(false)}>Fechar</button>
+          </div>
         </div>
-        {sortedVehicles.length === 0 && <p>Nenhum veículo encontrado.</p>}
-        <ul>
-          {sortedVehicles.map((vehicle, index) => (
-            <li key={index}>
-              <span>{vehicle.plate}</span>
-              <span>{vehicle.brand}</span>
-              <span>{vehicle.model}</span>
-              <span>{vehicle.year}</span>
-              <span>{vehicle.price}</span>
-              <span>{vehicle.color}</span>
-              <span>{vehicle.chassis}</span>
-              <div className="actions">
-                <button onClick={() => handleEdit(index)}>Editar</button>
-                <button onClick={() => handleDelete(index)}>Excluir</button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
+      )}
     </div>
   );
 };

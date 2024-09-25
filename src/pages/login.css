@@ -1,0 +1,99 @@
+/* Layout principal da página de login */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 0;
+    background: linear-gradient(135deg, #2e2e2e, #121212); /* Fundo escuro com gradiente moderno */
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+/* Título do login */
+.login-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #ffffff;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    text-shadow: 0px 3px 8px rgba(0, 123, 255, 0.6); /* Efeito de sombra para futurismo */
+    text-align: center;
+}
+
+/* Formulário de login */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(145deg, #1b1b1b, #2c2c2c); /* Fundo do formulário */
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5), -10px -10px 30px rgba(100, 100, 100, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Estilo dos campos de input */
+.login-input {
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    background: #121212;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.5);
+    font-size: 1rem;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+}
+
+.login-input:focus {
+    box-shadow: inset 3px 3px 8px rgba(0, 123, 255, 0.6); /* Brilho ao focar */
+}
+
+/* Botão de login */
+.login-button {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0, 123, 255, 0.6); /* Sombra suave */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px); /* Efeito de hover com leve subida */
+}
+
+/* Link de esqueci a senha */
+.forgot-password {
+    margin-top: 15px;
+    color: #00d4ff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: #00f0ff; /* Efeito de hover com cor neon */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .login-title {
+        font-size: 2rem; /* Reduz o tamanho do título no mobile */
+    }
+
+    .login-form {
+        padding: 20px; /* Ajuste de padding para telas menores */
+    }
+}

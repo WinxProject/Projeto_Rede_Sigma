@@ -1,152 +1,203 @@
-/* VehiclesPage.css */
-.vehicles-page {
-  padding: 20px;
-  max-width: 1000px;
+/* Estilos gerais */
+.vehicles-container10 {
+  max-width: 1200px;
   margin: 0 auto;
-  font-family: Arial, sans-serif;
-}
-
-.vehicle-form {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-  background-color: #f9f9f9;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
-.vehicle-form input {
-  flex: 1;
-  margin: 10px;
+/* Título da página */
+.vehicles-container10 h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Mensagem de confirmação */
+.confirmation-message10 {
+  background-color: #4caf50;
+  color: white;
   padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  font-size: 16px;
+  text-align: center;
+  margin-bottom: 20px;
+  border-radius: 5px;
 }
 
-.vehicle-form button {
-  width: 100%;
-  padding: 12px;
-  background-color: #4CAF50;
+/* Container de busca */
+.search-container10 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-container10 input,
+.search-container10 select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.search-container10 .btnbuscar10 {
+  background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 4px;
-  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.vehicle-form button:hover {
-  background-color: #45a049;
+.search-container10 .btnbuscar10:hover {
+  background-color: #0056b3;
 }
 
-.search-sort {
+/* Formulário de cadastro */
+.vehicle-input-form10 {
   display: flex;
+  flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.search-sort input[type="text"] {
-  flex: 1;
-  margin-right: 10px;
+.vehicle-input-form10 input {
+  width: 100%;
+  max-width: 400px;
   padding: 10px;
-  border-radius: 4px;
+  margin: 5px 0;
+  border-radius: 5px;
   border: 1px solid #ccc;
-  font-size: 16px;
 }
 
-.search-sort button {
+.vehicle-input-form10 button {
   padding: 10px 20px;
-  background-color: #4CAF50;
+  background-color: #28a745;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
-  margin-right: 10px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
 }
 
-.search-sort button:hover {
-  background-color: #45a049;
+.vehicle-input-form10 button:hover {
+  background-color: #218838;
 }
 
-.search-sort select {
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  margin-right: 10px;
-}
-
-.vehicle-list {
-  margin-top: 20px;
-}
-
-.vehicle-list-header {
+/* Popup de resultados */
+.popup-overlay10 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  background-color: #f1f1f1;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 10px;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 1000;
+  overflow-y: auto; /* Habilita o scroll */
 }
 
-.vehicle-list-header span {
-  flex: 1;
+.popup-content10 {
+  background-color: white;
+  padding: 20px;
+  width: 90%;
+  max-width: 800px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 40px 0; /* Espaçamento no topo para o popup */
+}
+
+.popup-content10 h2 {
   text-align: center;
-  font-weight: bold;
+  margin-bottom: 20px;
 }
 
-.vehicle-list ul {
-  list-style: none;
+.vehicle-list10 {
+  list-style-type: none;
   padding: 0;
 }
 
-.vehicle-list li {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  margin-bottom: 10px;
+.vehicle-list10 li {
+  background-color: #f9f9f9;
   padding: 15px;
-  border-radius: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  margin-bottom: 10px;
+  border-radius: 5px;
 }
 
-.vehicle-list li span {
-  flex: 1;
-  text-align: center;
+.vehicle-info10 {
+  margin-bottom: 5px;
+  font-size: 14px;
 }
 
-.vehicle-list .actions {
+/* Botões de ação */
+.action-buttons10 {
   display: flex;
   gap: 10px;
+  margin-top: 10px;
 }
 
-.vehicle-list button {
+.btneditar {
+  background-color: #ffc107;
+  color: white;
   border: none;
-  border-radius: 4px;
-  padding: 8px 9px;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btneditar:hover {
+  background-color: #e0a800;
+}
+
+.btnexcluir {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btnexcluir:hover {
+  background-color: #c82333;
+}
+
+/* Botão fechar popup */
+.popup-content10 .btnfechar {
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 20px;
+  background-color: #313131;
+  color: white;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-.vehicle-list button:hover {
-  opacity: 0.8;
+.popup-content10 .btnfechar:hover {
+  background-color: #5a6268;
 }
 
-.vehicle-list button:first-child {
-  background-color: #4CAF50; /* Cor para o botão de edição */
-  color: white;
-}
 
-.vehicle-list button:first-child:hover {
-  background-color: #45a049;
-}
+@media (max-width: 768px) {
+  .vehicle-input-form10 input {
+    max-width: 100%;
+  }
 
-.vehicle-list button:last-child {
-  background-color: #f44336; /* Cor para o botão de exclusão */
-  color: white;
-}
+  .popup-content10 {
+    width: 95%;
+  }
 
-.vehicle-list button:last-child:hover {
-  background-color: #e53935;
+  .action-buttons10 {
+    flex-direction: column;
+    gap: 5px;
+  }
 }

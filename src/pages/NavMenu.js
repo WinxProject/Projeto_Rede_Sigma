@@ -11,19 +11,21 @@ const NavMenu = () => {
   };
 
   return (
-    <nav className={`nav-menu ${isOpen ? 'open' : 'closed'}`}>
+    <nav className="nav-menu">
       <button className="menu-toggle" onClick={toggleMenu}>
         {isOpen ? 'Fechar' : 'Menu'}
       </button>
-      <ul className="menu-list">
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/clients">Clientes</Link></li>
-        <li><Link to="/vehicles">Veículos</Link></li>
-        <li><Link to="/operations">Operações</Link></li>
-        <li><Link to="/orders">Pedidos</Link></li>
-        <li><Link to="/manufacturers">Montadoras</Link></li>
-        <li><Link to="/sellers">Vendedores</Link></li>
-      </ul>
+      {isOpen && (
+        <ul className="menu-list">
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/clients">Clientes</Link></li>
+          <li><Link to="/vehicles">Veículos</Link></li>
+          <li><Link to="/operations">Operações</Link></li>
+          <li><Link to="/orders">Pedidos</Link></li>
+          <li><Link to="/manufacturers">Montadoras</Link></li>
+          <li><Link to="/sellers">Vendedores</Link></li>
+        </ul>
+      )}
     </nav>
   );
 };

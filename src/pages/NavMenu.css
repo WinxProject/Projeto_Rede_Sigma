@@ -3,63 +3,40 @@
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
-  width: 250px;
+  width: 100%; /* Ocupar toda a largura da tela */
   background-color: #333;
   color: white;
-  overflow: hidden;
-  transition: width 0.3s ease;
   z-index: 1000;
-}
-
-.nav-menu.closed {
-  width: 80px; /* Tamanho reduzido quando fechado */
-}
-
-.nav-menu.open {
-  width: 250px; /* Tamanho expandido quando aberto */
+  display: flex;
+  align-items: center; /* Centraliza os itens verticalmente */
+  padding: 10px 20px; /* Espaçamento interno */
 }
 
 .menu-toggle {
   background-color: #444;
   color: white;
   border: none;
-  padding: 15px;
   cursor: pointer;
-  width: 100%;
-  text-align: center;
   font-size: 18px;
   font-weight: bold;
-  border-bottom: 1px solid #555;
-}
-
-.menu-toggle:hover {
-  background-color: #575757;
+  margin-right: 20px; /* Espaço entre o botão e a lista */
 }
 
 .menu-list {
   list-style: none;
   padding: 0;
   margin: 0;
-  transition: opacity 0.3s ease;
-  opacity: 1;
-}
-
-.nav-menu.closed .menu-list {
-  opacity: 0;
-  pointer-events: none; /* Impede a interação com o menu quando fechado */
+  display: flex; /* Exibir itens em linha */
 }
 
 .menu-list li {
-  margin: 0;
+  margin: 0 15px; /* Espaço horizontal entre os itens */
 }
 
 .menu-list a {
   color: white;
   text-decoration: none;
-  padding: 15px 20px;
-  display: block;
-  border-bottom: 1px solid #444;
+  padding: 10px;
   transition: background-color 0.3s ease;
 }
 
@@ -71,4 +48,15 @@
 .menu-list a.active {
   background-color: #007bff;
   color: white;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .menu-toggle {
+    font-size: 16px; /* Ajuste de tamanho da fonte para melhor legibilidade */
+  }
+
+  .menu-list li {
+    margin: 0 10px; /* Espaço reduzido entre itens em telas menores */
+  }
 }

@@ -1,4 +1,3 @@
-// ClientsPage.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'; // Adicionado para navegação
 import './ClientsPage.css';

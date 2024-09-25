@@ -1,88 +1,77 @@
+/* OperationsPage.css */
+
 .operations-page {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    color: #333;
   }
   
   h1 {
     text-align: center;
-    color: #333;
+    margin-bottom: 20px;
   }
   
   .search-container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
   }
   
-  .search-category {
-    flex: 1;
-    margin-right: 10px;
+  .search-category,
+  .search-input,
+  .search-button {
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .search-input {
-    flex: 2;
     margin-right: 10px;
-    padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 5px;
   }
   
   .search-button {
-    flex: 0 0 100px;
-    padding: 10px;
-    background-color: #4CAF50;
+    background-color: #007bff;
     color: white;
-    border: none;
-    border-radius: 4px;
     cursor: pointer;
   }
   
   .search-button:hover {
-    background-color: #45a049;
+    background-color: #0056b3;
   }
   
   .operation-form {
     border: 1px solid #ccc;
-    padding: 15px;
-    margin-bottom: 20px;
+    padding: 20px;
     border-radius: 5px;
-    background-color: #fff;
+    background-color: #f9f9f9;
   }
   
   .operation-form label {
     display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+    margin: 10px 0 5px;
   }
   
   .operation-form input,
   .operation-form select {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
+    padding: 10px;
+    margin-bottom: 15px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 5px;
   }
   
   .operation-form button {
-    background-color: #4CAF50;
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
     color: white;
-    padding: 10px 15px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
   }
   
   .operation-form button:hover {
-    background-color: #45a049;
+    background-color: #218838;
   }
   
   .operations-list {
@@ -93,41 +82,75 @@
   .operation-item {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    margin: 10px 0;
+    border-radius: 5px;
     background-color: #f9f9f9;
   }
   
   .operation-buttons {
     display: flex;
-    gap: 10px;
+  }
+  
+  .edit-button,
+  .delete-button {
+    padding: 5px 10px;
+    margin-left: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
   }
   
   .edit-button {
-    background-color: #2196F3;
+    background-color: #007bff;
     color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .edit-button:hover {
-    background-color: #1E88E5;
   }
   
   .delete-button {
-    background-color: #f44336;
+    background-color: #dc3545;
     color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
+  }
+  
+  .edit-button:hover {
+    background-color: #0056b3;
   }
   
   .delete-button:hover {
-    background-color: #e53935;
+    background-color: #c82333;
+  }
+  
+  /* Responsivo */
+  @media (max-width: 600px) {
+    .search-container {
+      flex-direction: column;
+    }
+  
+    .search-category,
+    .search-input,
+    .search-button {
+      width: 100%;
+      margin: 5px 0;
+    }
+  
+    .operation-form {
+      padding: 15px;
+    }
+  
+    .operation-form input,
+    .operation-form select {
+      padding: 8px;
+    }
+  
+    .operation-buttons {
+      flex-direction: column;
+    }
+  
+    .edit-button,
+    .delete-button {
+      width: 100%;
+      margin: 5px 0;
+    }
   }
   
