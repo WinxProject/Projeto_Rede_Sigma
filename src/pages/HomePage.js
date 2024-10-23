@@ -13,7 +13,7 @@ const HomePage = ({ onLogout }) => {
 
     return (
         <div className="home-container">
-            <h1 className="title">Sistema Moderno de Gerenciamento</h1>
+            <h1 className="title">Sistema de Gerenciamento</h1>
             <button className="logout-button" onClick={handleLogout}>Logout</button> {/* Botão de logout */}
             <div className="menu-grid">
                 <div className="menu-item">

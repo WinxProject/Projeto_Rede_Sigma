@@ -118,13 +118,13 @@ const VehiclesPage = () => {
                   <div className="vehicle-info10">Cor: {vehicle.color}</div>
                   <div className="vehicle-info10">Chassi: {vehicle.chassis}</div>
                   <div className="action-buttons10">
-                    <button className='btneditar' onClick={() => handleEdit(index)}>Editar</button>
-                    <button className='btnexcluir' onClick={() => handleDelete(index)}>Excluir</button>
+                    <button className='btneditar2' onClick={() => handleEdit(index)}>Editar</button>
+                    <button className='btnexcluir2' onClick={() => handleDelete(index)}>Excluir</button>
                   </div>
                 </li>
               ))}
             </ul>
-            <button onClick={() => setIsPopupVisible(false)}>Fechar</button>
+            <button className='btnfechar2' onClick={() => setIsPopupVisible(false)}>Fechar</button>
           </div>
         </div>
       )}

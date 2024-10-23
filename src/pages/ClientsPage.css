@@ -1,170 +1,210 @@
-.clients-page {
+/* Estilos gerais da página de clientes */
+.clients-container {
   padding: 20px;
   max-width: 1000px;
-  margin: 0 auto;
-  top: 5px;
-  font-family: Arial, sans-serif;
-  position: relative; /* Para garantir que os elementos se comportem adequadamente */
-  z-index: 1; /* Garante que o conteúdo fique acima da barra lateral */
+  margin: 60px auto;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #e0e0e0;
+  border: 2px solid #333;
+  border-radius: 10px;
+  position: relative;
+  z-index: 1;
 }
 
-.client-form {
+/* Mensagem de confirmação */
+.confirmation-message {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Estilos da barra de pesquisa */
+.search-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  background-color: #d3d3d3;
+  padding: 10px;
+  border: 2px solid #999;
+  border-radius: 5px;
+}
+
+.search-container input[type="text"] {
+  flex: 1;
+  margin-right: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #999;
+  font-size: 14px;
+  min-width: 150px;
+}
+
+.btnbuscar1 {
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border: 1px solid #666;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btnbuscar1:hover {
+  background-color: #555;
+}
+
+/* Estilo do formulário de clientes */
+.client-input-form {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 20px;
-  background-color: #f9f9f9;
+  background-color: #f0f0f0;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  position: relative; /* Para evitar problemas de sobreposição */
-  z-index: 2; /* Mantém a forma do formulário acima do fundo */
+  border: 2px solid #aaa;
+  border-radius: 10px;
+  margin-bottom: 20px;
 }
 
-.client-form input {
+.client-input-form input {
   flex: 1;
   margin: 10px;
   padding: 10px;
   border-radius: 4px;
-  border: 1px solid #ccc;
-  font-size: 16px;
+  border: 1px solid #999;
+  font-size: 14px;
   min-width: 200px;
 }
 
-.client-form button {
+.client-input-form button {
   width: 100%;
   padding: 12px;
-  background-color: #4CAF50;
+  background-color: #333;
   color: white;
-  border: none;
+  border: 1px solid #666;
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
   margin-top: 10px;
 }
 
-.client-form button:hover {
-  background-color: #45a049;
+.client-input-form button:hover {
+  background-color: #555;
 }
 
-.search-sort {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.search-sort input[type="text"],
-.search-sort select {
-  flex: 1;
-  margin-right: 10px;
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  min-width: 150px;
-}
-
-.search-sort button {
-  padding: 10px 20px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-left: 10px;
-}
-
-.search-sort button:hover {
-  background-color: #45a049;
-}
-
+/* Estilo da lista de clientes */
 .client-list {
-  margin-top: 20px;
-}
-
-.client-list-header {
-  display: flex;
-  background-color: #f1f1f1;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-
-.client-list-header span {
-  flex: 1;
-  text-align: center;
-  font-weight: bold;
-}
-
-.client-list ul {
   list-style: none;
   padding: 0;
 }
 
 .client-list li {
   background-color: #fff;
-  border: 1px solid #ddd;
+  border: 1px solid #999;
   margin-bottom: 10px;
   padding: 15px;
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap; /* Permite que os itens se ajustem */
 }
 
-.client-list li span {
+.client-info {
   flex: 1;
-  text-align: center;
+  text-align: left; /* Ajustado para melhor legibilidade */
+  font-size: 14px;
+  color: #333;
+  margin-right: 10px; /* Espaço entre informações e botões */
 }
 
-.client-list .actions {
+.action-buttons {
   display: flex;
   gap: 10px;
+  margin-top: 10px; /* Margem para separação dos botões */
 }
 
-.client-list button {
-  border: none;
+.btneditar1, .btnexcluir1 {
+  border: 1px solid #666;
   border-radius: 4px;
-  padding: 8px 9px;
+  padding: 8px 12px;
   cursor: pointer;
   font-size: 14px;
 }
 
-.client-list button:hover {
-  opacity: 0.8;
-}
-
-.client-list button:first-child {
-  background-color: #4CAF50; 
+.btneditar1 {
+  background-color: #4CAF50;
   color: white;
 }
 
-.client-list button:first-child:hover {
+.btneditar1:hover {
   background-color: #45a049;
 }
 
-.client-list button:last-child {
-  background-color: #f44336; 
+.btnexcluir1 {
+  background-color: #f44336;
   color: white;
 }
 
-.client-list button:last-child:hover {
+.btnexcluir1:hover {
   background-color: #e53935;
 }
 
-/* Responsivo */
+.btnfechar1 {
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border: 1px solid #666;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Popup de resultados */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 600px;
+  width: 100%;
+  overflow-y: auto; /* Adiciona rolagem se necessário */
+}
+
+.popup-content h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.popup-content button {
+  display: block; /* Para o botão ocupar uma linha inteira */
+  margin: 0 auto; /* Centraliza o botão */
+}
+
+.popup-content button:hover {
+  background-color: #555;
+}
+
+/* Responsividade */
 @media (max-width: 600px) {
-  .client-form,
-  .search-sort {
+  .client-input-form, .search-container {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .client-form input,
-  .search-sort input[type="text"],
-  .search-sort select,
-  .search-sort button {
+  .client-input-form input, .search-container input, .search-container button {
     margin: 5px 0;
     width: 100%;
   }
@@ -173,6 +213,10 @@
     flex-direction: column;
     align-items: flex-start;
     padding: 10px;
+  }
+
+  .client-info {
+    text-align: left; /* Melhor legibilidade em dispositivos móveis */
   }
 
   .client-list button {

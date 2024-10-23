@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // Adicionado para navegação
+import NavMenu from './NavMenu';
 import './ClientsPage.css';
-import NavMenu from './NavMenu'; // Importado o NavMenu
 
 const ClientsPage = () => {
   const [clients, setClients] = useState([]);
@@ -15,9 +14,11 @@ const ClientsPage = () => {
     neighborhood: '',
     city: ''
   });
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sortOrder, setSortOrder] = useState('name');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredClients, setFilteredClients] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
+  const [confirmationMessage, setConfirmationMessage] = useState('');
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   useEffect(() => {
     const savedClients = JSON.parse(localStorage.getItem('clients')) || [];
@@ -28,29 +29,12 @@ const ClientsPage = () => {
     localStorage.setItem('clients', JSON.stringify(clients));
   }, [clients]);
 
-  const formatCPF_CNPJ = (value) => {
-    value = value.replace(/\D/g, '');
-    if (value.length <= 11) {
-      return value.replace(/(\d{3})(\d{3})?(\d{3})?(\d{2})?/, function (match, p1, p2, p3, p4) {
-        return [p1, p2, p3, p4].filter(Boolean).join('.').replace(/(\d{3}\.\d{3}\.\d{3})(\d{2})?/, '$1-$2');
-      });
-    } else {
-      return value.replace(/(\d{2})(\d{3})?(\d{3})?(\d{4})?(\d{2})?/, function (match, p1, p2, p3, p4, p5) {
-        return [p1, p2, p3, p4, p5].filter(Boolean).join('.').replace(/(\d{2}\.\d{3}\.\d{3})\/(\d{4})-(\d{2})/, '$1/$2-$3');
-      });
-    }
-  };
-
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'cpf') {
-      setForm(prevForm => ({ ...prevForm, [name]: formatCPF_CNPJ(value) }));
-    } else {
-      setForm(prevForm => ({ ...prevForm, [name]: value }));
-    }
+    setForm(prevForm => ({ ...prevForm, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
     if (form.cpf && form.name && form.email && form.phone) {
       if (editingIndex !== null) {
@@ -62,151 +46,82 @@ const ClientsPage = () => {
       } else {
         setClients(prevClients => [...prevClients, form]);
       }
-      setForm({ 
-        cpf: '', name: '', email: '', phone: '', 
-        street: '', number: '', neighborhood: '', city: '' 
-      });
+      setForm({ cpf: '', name: '', email: '', phone: '', street: '', number: '', neighborhood: '', city: '' });
+      setConfirmationMessage('Cliente cadastrado com sucesso!');
+      setTimeout(() => setConfirmationMessage(''), 3000);
     }
-  };
-
-  const handleEdit = (index) => {
-    const clientToEdit = clients[index];
-    setForm(clientToEdit);
-    setEditingIndex(index);
-  };
-
-  const handleDelete = (index) => {
-    const updatedClients = clients.filter((_, i) => i !== index);
-    setClients(updatedClients);
   };
 
   const handleSearch = () => {
-    return clients.filter(client =>
-      client.cpf.includes(searchTerm) || client.name.toLowerCase().includes(searchTerm.toLowerCase())
+    const results = clients.filter(client =>
+      client.cpf.includes(searchQuery) || client.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
+    setFilteredClients(results);
+    setIsPopupVisible(results.length > 0);
   };
 
-  const sortedClients = handleSearch().sort((a, b) => {
-    if (sortOrder === 'name') {
-      return a.name.localeCompare(b.name);
-    }
-    return a.cpf.localeCompare(b.cpf);
-  });
+  const handleEdit = (index) => {
+    const clientToEdit = filteredClients[index];
+    setForm(clientToEdit);
+    setClients(clients.filter(client => client !== clientToEdit)); 
+    setIsPopupVisible(false); 
+  };
+
+  const handleDelete = (index) => {
+    setClients(clients.filter((_, i) => i !== index));
+    setIsPopupVisible(false);
+  };
 
   return (
-    <div className="clients-page">
-      <NavMenu /> {/* Adicionado o NavMenu */}
+    <div className="clients-container">
+      <NavMenu />
       <h1>Cadastro de Clientes</h1>
-      <form onSubmit={handleSubmit} className="client-form">
-        <input
-          type="text"
-          name="cpf"
-          value={form.cpf}
-          onChange={handleChange}
-          placeholder="CPF ou CNPJ"
-          required
-          maxLength={18}
+      {confirmationMessage && <div className="confirmation-message">{confirmationMessage}</div>}
+
+      <div className="search-container">
+        <input 
+          type="text" 
+          value={searchQuery} 
+          onChange={(e) => setSearchQuery(e.target.value)} 
+          placeholder="Buscar CPF ou Nome..." 
         />
-        <input
-          type="text"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          placeholder="Nome"
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          placeholder="Email"
-          required
-        />
-        <input
-          type="tel"
-          name="phone"
-          value={form.phone}
-          onChange={handleChange}
-          placeholder="Telefone"
-          required
-        />
-        <input
-          type="text"
-          name="street"
-          value={form.street}
-          onChange={handleChange}
-          placeholder="Rua"
-          required
-        />
-        <input
-          type="text"
-          name="number"
-          value={form.number}
-          onChange={handleChange}
-          placeholder="Número"
-          required
-        />
-        <input
-          type="text"
-          name="neighborhood"
-          value={form.neighborhood}
-          onChange={handleChange}
-          placeholder="Bairro"
-          required
-        />
-        <input
-          type="text"
-          name="city"
-          value={form.city}
-          onChange={handleChange}
-          placeholder="Cidade"
-          required
-        />
-        <button type="submit">{editingIndex !== null ? 'Atualizar Cliente' : 'Adicionar Cliente'}</button>
+        <button className='btnbuscar1' onClick={handleSearch}>Buscar</button>
+      </div>
+
+      <form onSubmit={handleFormSubmit} className="client-input-form">
+        <input type="text" name="cpf" value={form.cpf} onChange={handleInputChange} placeholder="CPF ou CNPJ" required />
+        <input type="text" name="name" value={form.name} onChange={handleInputChange} placeholder="Nome" required />
+        <input type="email" name="email" value={form.email} onChange={handleInputChange} placeholder="Email" required />
+        <input type="tel" name="phone" value={form.phone} onChange={handleInputChange} placeholder="Telefone" required />
+        <input type="text" name="street" value={form.street} onChange={handleInputChange} placeholder="Rua" required />
+        <input type="text" name="number" value={form.number} onChange={handleInputChange} placeholder="Número" required />
+        <input type="text" name="neighborhood" value={form.neighborhood} onChange={handleInputChange} placeholder="Bairro" required />
+        <input type="text" name="city" value={form.city} onChange={handleInputChange} placeholder="Cidade" required />
+        <button type="submit">Adicionar Cliente</button>
       </form>
-      <div className="search-sort">
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Buscar por CPF/CNPJ ou Nome..."
-        />
-        <button onClick={() => setSearchTerm('')}>Buscar</button>
-        <select
-          value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value)}
-        >
-          <option value="name">Ordenar por Nome</option>
-          <option value="cpf">Ordenar por CPF</option>
-        </select>
-      </div>
-      <div className="client-list">
-        <div className="client-list-header">
-          <span>CPF/CNPJ</span>
-          <span>Nome</span>
-          <span>Email</span>
-          <span>Telefone</span>
-          <span>Endereço</span>
-          <span>Ações</span>
+
+      {isPopupVisible && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <h2>Resultados da Busca</h2>
+            <ul className="client-list">
+              {filteredClients.map((client, index) => (
+                <li key={index}>
+                  <div className="client-info">CPF: {client.cpf}</div>
+                  <div className="client-info">Nome: {client.name}</div>
+                  <div className="client-info">Email: {client.email}</div>
+                  <div className="client-info">Telefone: {client.phone}</div>
+                  <div className="action-buttons">
+                    <button className='btneditar1' onClick={() => handleEdit(index)}>Editar</button>
+                    <button className='btnexcluir1'  onClick={() => handleDelete(index)}>Excluir</button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <button className='btnfechar1' onClick={() => setIsPopupVisible(false)}>Fechar</button>
+          </div>
         </div>
-        {sortedClients.length === 0 && <p>Nenhum cliente encontrado.</p>}
-        <ul>
-          {sortedClients.map((client, index) => (
-            <li key={index}>
-              <span>{client.cpf}</span>
-              <span>{client.name}</span>
-              <span>{client.email}</span>
-              <span>{client.phone}</span>
-              <span>{client.street}, {client.number} - {client.neighborhood}, {client.city}</span>
-              <div className="actions">
-                <button onClick={() => handleEdit(index)}>Editar</button>
-                <button onClick={() => handleDelete(index)}>Excluir</button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
+      )}
     </div>
   );
 };

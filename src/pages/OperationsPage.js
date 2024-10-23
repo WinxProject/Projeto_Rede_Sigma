@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // Adicionado para navegação
+import { Link } from 'react-router-dom'; 
 import './OperationsPage.css';
-import NavMenu from './NavMenu'; // Importado o NavMenu
+import NavMenu from './NavMenu'; 
 
 function OperationsPage() {
   const [operations, setOperations] = useState([]);
@@ -19,14 +19,14 @@ function OperationsPage() {
     number: '',
     date: '',
     type: '',
-    details: ''
   });
   const [editingIndex, setEditingIndex] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchCategory, setSearchCategory] = useState('client');
   const [hasSearched, setHasSearched] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
-  
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [filteredOperations, setFilteredOperations] = useState([]);
+
   useEffect(() => {
     const storedOperations = JSON.parse(localStorage.getItem('operations')) || [];
     setOperations(storedOperations);
@@ -34,11 +34,10 @@ function OperationsPage() {
 
   const handleAddOperation = (e) => {
     e.preventDefault();
-
     let updatedOperations;
+
     if (editingIndex !== null) {
       updatedOperations = operations.map((op, index) => (index === editingIndex ? operation : op));
-      setEditingIndex(null);
       setSuccessMessage('Operação atualizada com sucesso!');
     } else {
       updatedOperations = [...operations, operation];
@@ -47,15 +46,7 @@ function OperationsPage() {
 
     setOperations(updatedOperations);
     localStorage.setItem('operations', JSON.stringify(updatedOperations));
-    setOperation({
-      client: '',
-      vehicle: { plate: '', brand: '', model: '', year: '', color: '', chassis: '' },
-      seller: '',
-      number: '',
-      date: '',
-      type: '',
-      details: ''
-    });
+    resetForm();
   };
 
   const handleEditOperation = (index) => {
@@ -70,51 +61,33 @@ function OperationsPage() {
   };
 
   const handleSearch = () => {
-    return operations.filter(op => {
-      const term = searchTerm.toLowerCase();
-      switch (searchCategory) {
-        case 'client':
-          return op.client.toLowerCase().includes(term);
-        case 'seller':
-          return op.seller.toLowerCase().includes(term);
-        case 'number':
-          return op.number.includes(term);
-        case 'date':
-          return op.date.includes(term);
-        default:
-          return false;
-      }
-    });
+    const term = searchTerm.toLowerCase();
+    const results = operations.filter(op => 
+      op.client.toLowerCase().includes(term) || 
+      op.seller.toLowerCase().includes(term) || 
+      op.number.includes(term)
+    );
+    setFilteredOperations(results);
+    setPopupVisible(results.length > 0);
   };
 
-  const filteredOperations = hasSearched ? handleSearch() : operations;
+  const resetForm = () => {
+    setOperation({
+      client: '',
+      vehicle: { plate: '', brand: '', model: '', year: '', color: '', chassis: '' },
+      seller: '',
+      number: '',
+      date: '',
+      type: '',
+    });
+    setEditingIndex(null);
+  };
 
   return (
-    
     <div className="operations-page">
-      <NavMenu /> {/* Adicionado o NavMenu */}
+      <NavMenu />
       <h1>Controle de Operações</h1>
-
       {successMessage && <div className="success-message">{successMessage}</div>}
-
-      <div className="search-container">
-        <select value={searchCategory} onChange={(e) => setSearchCategory(e.target.value)} className="search-category">
-          <option value="client">Cliente</option>
-          <option value="seller">Vendedor</option>
-          <option value="number">Número</option>
-          <option value="date">Data</option>
-        </select>
-
-        <input
-          type="text"
-          placeholder="Buscar..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="search-input"
-        />
-
-        <button onClick={() => setHasSearched(true)} className="search-button">Buscar</button>
-      </div>
 
       <form onSubmit={handleAddOperation} className="operation-form">
         <label>Cliente:</label>
@@ -124,7 +97,7 @@ function OperationsPage() {
           onChange={(e) => setOperation({ ...operation, client: e.target.value })}
           required
         />
-
+        
         <label>Tipo de Operação:</label>
         <select
           value={operation.type}
@@ -138,49 +111,44 @@ function OperationsPage() {
 
         <fieldset>
           <legend>Veículo</legend>
-          <label>Placa:</label>
           <input
             type="text"
+            placeholder="Placa"
             value={operation.vehicle.plate}
             onChange={(e) => setOperation({ ...operation, vehicle: { ...operation.vehicle, plate: e.target.value } })}
             required
           />
-
-          <label>Marca:</label>
           <input
             type="text"
+            placeholder="Marca"
             value={operation.vehicle.brand}
             onChange={(e) => setOperation({ ...operation, vehicle: { ...operation.vehicle, brand: e.target.value } })}
             required
           />
-
-          <label>Modelo:</label>
           <input
             type="text"
+            placeholder="Modelo"
             value={operation.vehicle.model}
             onChange={(e) => setOperation({ ...operation, vehicle: { ...operation.vehicle, model: e.target.value } })}
             required
           />
-
-          <label>Ano:</label>
           <input
             type="text"
+            placeholder="Ano"
             value={operation.vehicle.year}
             onChange={(e) => setOperation({ ...operation, vehicle: { ...operation.vehicle, year: e.target.value } })}
             required
           />
-
-          <label>Cor:</label>
           <input
             type="text"
+            placeholder="Cor"
             value={operation.vehicle.color}
             onChange={(e) => setOperation({ ...operation, vehicle: { ...operation.vehicle, color: e.target.value } })}
             required
           />
-
-          <label>Chassi:</label>
           <input
             type="text"
+            placeholder="Chassi"
             value={operation.vehicle.chassis}
             onChange={(e) => setOperation({ ...operation, vehicle: { ...operation.vehicle, chassis: e.target.value } })}
             required
@@ -216,9 +184,20 @@ function OperationsPage() {
         </button>
       </form>
 
-      {hasSearched && (
-        <>
-          <h2>Operações Realizadas</h2>
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Buscar Cliente ou Vendedor..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+        />
+        <button onClick={() => { setHasSearched(true); handleSearch(); }} className="btnbuscar">Buscar</button>
+      </div>
+
+      {popupVisible && (
+        <div className="popup">
+          <h2>Operações Encontradas</h2>
           {filteredOperations.length > 0 ? (
             <ul className="operations-list">
               {filteredOperations.map((op, index) => (
@@ -234,7 +213,8 @@ function OperationsPage() {
           ) : (
             <p>Nenhuma operação encontrada.</p>
           )}
-        </>
+          <button onClick={() => setPopupVisible(false)}>Fechar</button>
+        </div>
       )}
     </div>
   );

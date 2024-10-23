@@ -1,156 +1,199 @@
-/* OperationsPage.css */
-
+/* Estilos gerais da página */
 .operations-page {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    color: #333;
-  }
-  
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .search-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .search-category,
-  .search-input,
-  .search-button {
-    padding: 10px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .search-button {
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-  }
-  
-  .search-button:hover {
-    background-color: #0056b3;
-  }
-  
+  padding: 20px;
+  max-width: 1000px;
+  margin: 60px auto; /* Aumente o valor para afastar mais do topo */
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #e0e0e0;
+  border: 2px solid #333;
+  border-radius: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Mensagem de confirmação */
+.success-message {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Estilos do formulário de operação */
+.operation-form {
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border: 2px solid #aaa;
+  border-radius: 10px;
+  margin-bottom: 20px; /* Maior margem para separação */
+}
+
+.operation-form label {
+  margin: 2px 0 5px;
+}
+
+.operation-form input[type="text"],
+.operation-form input[type="date"],
+.operation-form select {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #999;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.operation-form button {
+  padding: 12px;
+  background-color: #333;
+  color: white;
+  border: 1px solid #666;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.operation-form button:hover {
+  background-color: #555;
+}
+
+/* Estilos da busca */
+.search-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #d3d3d3;
+  padding: 10px;
+  border: 2px solid #999;
+  border-radius: 5px;
+}
+
+.search-input {
+  flex: 1;
+  margin-right: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #999;
+  font-size: 14px;
+}
+
+.btnbuscar {
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border: 1px solid #666;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btnbuscar:hover {
+  background-color: #555;
+}
+
+/* Popup para exibir operações */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 2px solid #999;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  padding: 20px;
+  max-width: 90%;
+  max-height: 80%;
+  overflow-y: auto; /* Adiciona rolagem se necessário */
+}
+
+/* Estilo da lista de operações */
+.operations-list {
+  list-style: none;
+  padding: 0;
+}
+
+.operation-item {
+  background-color: #fff;
+  border: 1px solid #999;
+  margin-bottom: 5px;
+  padding: 15px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.operation-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-button {
+  padding: 8px 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-button:hover {
+  background-color: #45a049;
+}
+
+.delete-button {
+  padding: 8px 12px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #e53935;
+}
+
+.popup h2 {
+  margin-top: 0;
+}
+
+.popup button {
+  margin-top: 10px;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
   .operation-form {
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
+    padding: 10px;
   }
-  
-  .operation-form label {
-    display: block;
-    margin: 10px 0 5px;
-  }
-  
+
   .operation-form input,
-  .operation-form select {
+  .operation-form select,
+  .search-input,
+  .btnbuscar {
+    margin: 5px 0;
     width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
   }
-  
-  .operation-form button {
-    width: 100%;
-    padding: 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .operation-form button:hover {
-    background-color: #218838;
-  }
-  
-  .operations-list {
-    list-style-type: none;
-    padding: 0;
-  }
-  
+
   .operation-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     padding: 10px;
-    border: 1px solid #ccc;
-    margin: 10px 0;
-    border-radius: 5px;
-    background-color: #f9f9f9;
   }
-  
+
   .operation-buttons {
-    display: flex;
+    flex-direction: column;
+    width: 100%;
   }
-  
+
   .edit-button,
   .delete-button {
-    padding: 5px 10px;
-    margin-left: 5px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    width: 100%;
   }
-  
-  .edit-button {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .delete-button {
-    background-color: #dc3545;
-    color: white;
-  }
-  
-  .edit-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .delete-button:hover {
-    background-color: #c82333;
-  }
-  
-  /* Responsivo */
-  @media (max-width: 600px) {
-    .search-container {
-      flex-direction: column;
-    }
-  
-    .search-category,
-    .search-input,
-    .search-button {
-      width: 100%;
-      margin: 5px 0;
-    }
-  
-    .operation-form {
-      padding: 15px;
-    }
-  
-    .operation-form input,
-    .operation-form select {
-      padding: 8px;
-    }
-  
-    .operation-buttons {
-      flex-direction: column;
-    }
-  
-    .edit-button,
-    .delete-button {
-      width: 100%;
-      margin: 5px 0;
-    }
-  }
-  
+}
