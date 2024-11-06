@@ -1,14 +1,231 @@
-/* src/pages/OrdersPage.css */
-.orders-page {
+/* Estilos gerais da página de pedidos */
+.orders-container5 {
     padding: 20px;
-}
-
-.orders-page h1 {
-    font-size: 2rem;
+    max-width: 1000px;
+    margin: 60px auto;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #e0e0e0;
+    border: 2px solid #333;
+    border-radius: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Mensagem de confirmação */
+  .confirmation-message5 {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  /* Estilos da barra de pesquisa */
+  .search-container5 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    background-color: #d3d3d3;
+    padding: 10px;
+    border: 2px solid #999;
+    border-radius: 5px;
+  }
+  
+  .search-container5 input[type="text"] {
+    flex: 1;
+    margin-right: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #999;
+    font-size: 14px;
+    min-width: 150px;
+  }
+  
+  .search-container5 select {
+    margin-right: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #999;
+    font-size: 14px;
+  }
+  
+  .btn-search5 {
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: 1px solid #666;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn-search5:hover {
+    background-color: #555;
+  }
+  
+  /* Estilo do formulário de pedidos */
+  .order-input-form5 {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border: 2px solid #aaa;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .order-input-form5 input {
+    flex: 1;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #999;
+    font-size: 14px;
+    min-width: 200px;
+  }
+  
+  .order-input-form5 button {
+    width: 100%;
+    padding: 12px;
+    background-color: #333;
+    color: white;
+    border: 1px solid #666;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .order-input-form5 button:hover {
+    background-color: #555;
+  }
+  
+  /* Estilo da lista de pedidos */
+  .order-list5 {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .order-list5 li {
+    background-color: #fff;
+    border: 1px solid #999;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .order-info5 {
+    flex: 1;
+    text-align: left;
+    font-size: 14px;
     color: #333;
-}
-
-.orders-page p {
-    font-size: 1rem;
-    color: #666;
-}
+    margin-right: 10px;
+  }
+  
+  .action-buttons5 {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .btn-edit5, .btn-delete5 {
+    border: 1px solid #666;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .btn-edit5 {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .btn-edit5:hover {
+    background-color: #45a049;
+  }
+  
+  .btn-delete5 {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .btn-delete5:hover {
+    background-color: #e53935;
+  }
+  
+  .btn-close5 {
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: 1px solid #666;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Popup de resultados */
+  .popup-overlay5 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .popup-content5 {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 100%;
+    overflow-y: auto;
+  }
+  
+  .popup-content5 h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .popup-content5 button:hover {
+    background-color: #555;
+  }
+  
+  /* Responsividade */
+  @media (max-width: 600px) {
+    .order-input-form5, .search-container5 {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .order-input-form5 input, .search-container5 input, .search-container5 select, .btn-search5 {
+      margin: 5px 0;
+      width: 100%;
+    }
+  
+    .order-list5 li {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px;
+    }
+  
+    .order-info5 {
+      text-align: left;
+    }
+  
+    .order-list5 button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+    }
+  }
+  
