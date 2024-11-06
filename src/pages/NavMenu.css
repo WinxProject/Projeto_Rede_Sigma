@@ -1,25 +1,30 @@
-/* NavMenu.css */
+
 .nav-menu {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%; /* Ocupar toda a largura da tela */
-  background-color: #333;
+  width: 100%; 
+  background: linear-gradient(135deg, #020608, #203a43, #000000);
   color: white;
   z-index: 1000;
   display: flex;
-  align-items: center; /* Centraliza os itens verticalmente */
-  padding: 10px 20px; /* Espaçamento interno */
+  align-items: center; 
+  padding: 10px 20px; 
 }
 
 .menu-toggle {
-  background-color: #444;
+  background: linear-gradient(135deg, #020303, #203a43, #000000);
   color: white;
   border: none;
   cursor: pointer;
   font-size: 18px;
   font-weight: bold;
-  margin-right: 20px; /* Espaço entre o botão e a lista */
+  margin-right: 20px; 
+  border-radius: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 4px;
+  padding-top: 4px;
 }
 
 .menu-list {

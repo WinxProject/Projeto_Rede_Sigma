@@ -54,7 +54,7 @@
 
 .btnbuscar10 {
   padding: 10px 20px;
-  background-color: #333;
+  background: linear-gradient(135deg, #020303, #203a43, #000000);
   color: white;
   border: 1px solid #666;
   border-radius: 4px;
@@ -89,7 +89,7 @@
 .vehicle-input-form10 button {
   width: 100%;
   padding: 12px;
-  background-color: #333;
+  background: linear-gradient(135deg, #020303, #203a43, #000000);
   color: white;
   border: 1px solid #666;
   border-radius: 4px;

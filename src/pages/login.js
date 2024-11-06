@@ -13,7 +13,7 @@ const Login = ({ onLogin }) => {
 
     return (
         <div className="login-container">
-            <h1 className="login-title">Login</h1>
+            <h1 className="login-title">Rede Sigma</h1>
             <form className="login-form" onSubmit={handleSubmit}>
                 <input
                     type="text"

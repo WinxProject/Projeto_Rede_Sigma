@@ -1,8 +1,8 @@
-/* Estilos gerais da página */
-.operations-page {
+/* Estilos gerais da página de operações */
+.operations-container {
   padding: 20px;
   max-width: 1000px;
-  margin: 60px auto; /* Aumente o valor para afastar mais do topo */
+  margin: 60px auto;
   font-family: 'Courier New', Courier, monospace;
   background-color: #e0e0e0;
   border: 2px solid #333;
@@ -11,8 +11,14 @@
   z-index: 1;
 }
 
+h1 {
+  text-align: center;
+  color: #333;
+  font-weight: bold;
+}
+
 /* Mensagem de confirmação */
-.success-message {
+.confirmation-message {
   background-color: #4CAF50;
   color: white;
   padding: 10px;
@@ -22,66 +28,137 @@
   font-weight: bold;
 }
 
-/* Estilos do formulário de operação */
-.operation-form {
-  display: flex;
-  flex-direction: column;
-  background-color: #f0f0f0;
-  padding: 20px;
-  border: 2px solid #aaa;
-  border-radius: 10px;
-  margin-bottom: 20px; /* Maior margem para separação */
-}
-
-.operation-form label {
-  margin: 2px 0 5px;
-}
-
-.operation-form input[type="text"],
-.operation-form input[type="date"],
-.operation-form select {
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #999;
-  font-size: 14px;
-  margin-bottom: 15px;
-}
-
-.operation-form button {
-  padding: 12px;
-  background-color: #333;
-  color: white;
-  border: 1px solid #666;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.operation-form button:hover {
-  background-color: #555;
-}
-
-/* Estilos da busca */
+/* Estilos da barra de pesquisa */
 .search-container {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  flex-wrap: wrap;
   background-color: #d3d3d3;
   padding: 10px;
   border: 2px solid #999;
   border-radius: 5px;
 }
 
-.search-input {
+.search-container input[type="text"] {
   flex: 1;
   margin-right: 10px;
   padding: 10px;
   border-radius: 4px;
   border: 1px solid #999;
   font-size: 14px;
+  min-width: 150px;
 }
 
-.btnbuscar {
+.btnbuscar1 {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #020303, #203a43, #000000);
+  color: white;
+  border: 1px solid #666;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btnbuscar1:hover {
+  background-color: #555;
+}
+
+/* Estilo do formulário de operações */
+.operation-input-form {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border: 2px solid #aaa;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.operation-input-form input, .operation-input-form select {
+  flex: 1;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #999;
+  font-size: 14px;
+  min-width: 200px;
+}
+
+.operation-input-form button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #020303, #203a43, #000000);
+  color: white;
+  border: 1px solid #666;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.operation-input-form button:hover {
+  background-color: #555;
+}
+
+/* Estilo da lista de operações */
+.operation-list {
+  list-style: none;
+  padding: 0;
+}
+
+.operation-list li {
+  background-color: #fff;
+  border: 1px solid #999;
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.operation-info {
+  flex: 1;
+  text-align: left;
+  font-size: 14px;
+  color: #333;
+  margin-right: 10px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btneditar1, .btnexcluir1 {
+  border: 1px solid #666;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btneditar1 {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btneditar1:hover {
+  background-color: #45a049;
+}
+
+.btnexcluir1 {
+  background-color: #f44336;
+  color: white;
+}
+
+.btnexcluir1:hover {
+  background-color: #e53935;
+}
+
+.btnfechar1 {
   padding: 10px 20px;
   background-color: #333;
   color: white;
@@ -90,110 +167,67 @@
   cursor: pointer;
 }
 
-.btnbuscar:hover {
-  background-color: #555;
-}
-
-/* Popup para exibir operações */
-.popup {
+/* Popup de resultados */
+.popup-overlay {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  border: 2px solid #999;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
-  padding: 20px;
-  max-width: 90%;
-  max-height: 80%;
-  overflow-y: auto; /* Adiciona rolagem se necessário */
-}
-
-/* Estilo da lista de operações */
-.operations-list {
-  list-style: none;
-  padding: 0;
-}
-
-.operation-item {
-  background-color: #fff;
-  border: 1px solid #999;
-  margin-bottom: 5px;
-  padding: 15px;
-  border-radius: 8px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
-.operation-buttons {
-  display: flex;
-  gap: 10px;
+.popup-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 600px;
+  width: 100%;
+  overflow-y: auto;
 }
 
-.edit-button {
-  padding: 8px 12px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.popup-content h2 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.edit-button:hover {
-  background-color: #45a049;
+.popup-content button {
+  display: block;
+  margin: 0 auto;
 }
 
-.delete-button {
-  padding: 8px 12px;
-  background-color: #f44336;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.delete-button:hover {
-  background-color: #e53935;
-}
-
-.popup h2 {
-  margin-top: 0;
-}
-
-.popup button {
-  margin-top: 10px;
+.popup-content button:hover {
+  background-color: #555;
 }
 
 /* Responsividade */
 @media (max-width: 600px) {
-  .operation-form {
-    padding: 10px;
+  .operation-input-form, .search-container {
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .operation-form input,
-  .operation-form select,
-  .search-input,
-  .btnbuscar {
+  .operation-input-form input, .operation-input-form select, .search-container input, .search-container button {
     margin: 5px 0;
     width: 100%;
   }
 
-  .operation-item {
+  .operation-list li {
     flex-direction: column;
     align-items: flex-start;
     padding: 10px;
   }
 
-  .operation-buttons {
-    flex-direction: column;
-    width: 100%;
+  .operation-info {
+    text-align: left;
   }
 
-  .edit-button,
-  .delete-button {
+  .operation-list button {
     width: 100%;
+    padding: 10px;
+    font-size: 16px;
   }
 }

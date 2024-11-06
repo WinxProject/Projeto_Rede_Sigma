@@ -20,18 +20,19 @@
     color: #ffffff;
     letter-spacing: 1.5px;
     font-weight: 700;
-    text-shadow: 0px 3px 8px rgba(0, 123, 255, 0.6); /* Reduzida a sombra */
+    text-shadow: 0px 3px 8px rgba(0, 123, 255, 0.6); 
     text-align: center;
+
 }
 
 /* Grid moderno para os cards */
 .menu-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Diminuído o tamanho mínimo */
-    gap: 20px; /* Reduzido o espaçamento entre os cards */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 20px; 
     width: 100%;
-    max-width: 1000px; /* Reduzido o tamanho total da grid */
-    padding: 15px; /* Reduzido o padding */
+    max-width: 1000px; 
+    padding: 15px; 
 }
 
 /* Estilo futurista 3D dos itens de menu */
@@ -65,11 +66,11 @@
 
 .menu-item:hover {
     transform: translateY(-10px);
-    box-shadow: 6px 15px 30px rgba(0, 123, 255, 0.5); /* Ajustado o efeito de profundidade */
+    box-shadow: 6px 15px 30px rgba(0, 123, 255, 0.5); 
 }
 
 .menu-item h2 {
-    font-size: 1.5rem; /* Diminuído o tamanho da fonte */
+    font-size: 1.5rem; 
     margin-bottom: 10px;
     color: #00d4ff;
     text-shadow: 0 3px 10px rgba(0, 123, 255, 0.8);
@@ -77,7 +78,7 @@
 }
 
 .menu-item p {
-    font-size: 0.9rem; /* Diminuído o tamanho da fonte */
+    font-size: 0.9rem; 
     color: #ccc;
     line-height: 1.4;
     margin-bottom: 15px;
@@ -85,15 +86,15 @@
 
 .menu-link {
     display: inline-block;
-    padding: 10px 20px; /* Reduzido o tamanho do botão */
-    background-color: #007BFF;
+    padding: 10px 20px; 
+    background: linear-gradient(135deg, #020303, #203a43, #000000);
     color: white;
     text-decoration: none;
-    border-radius: 40px; /* Mantido o design arredondado */
+    border-radius: 40px; 
     font-size: 1rem;
     font-weight: 600;
     transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.6); /* Ajustada a sombra do botão */
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.6); 
 }
 
 .menu-link:hover {
@@ -101,32 +102,30 @@
     transform: translateY(-2px);
 }
 
-/* Animações suaves */
+
 .menu-item:hover h2 {
     color: #00f0ff;
 }
 
-/* src/pages/HomePage.css */
 
-/* src/pages/HomePage.css */
 
-/* Estilo do botão de logout */
 .logout-button {
-    position: absolute; /* Torna a posição absoluta em relação ao contêiner pai */
-    top: 20px; /* Distância do topo */
-    left: 20px; /* Distância do lado esquerdo */
+    position: absolute; 
+    top: 20px; 
+    left: 20px; 
     display: inline-block;
     padding: 10px 20px;
-    background-color: #dc3545; /* Cor vermelha para logout */
+    background: linear-gradient(135deg, #020303, #203a43, #000000);
     color: white;
     text-decoration: none;
-    border-radius: 5px; /* Bordas arredondadas */
+    border-radius: 5px; 
     font-size: 1rem;
     transition: background-color 0.3s ease;
+    cursor: pointer;
 }
 
 .logout-button:hover {
-    background-color: #c82333; /* Cor ao passar o mouse */
+    background-color: #000000; 
 }
 
 
@@ -134,7 +133,7 @@
 /* Responsividade */
 @media (max-width: 768px) {
     .title {
-        font-size: 2rem; /* Reduzido o tamanho do título para mobile */
+        font-size: 2rem; 
     }
 
     .menu-grid {
@@ -142,11 +141,11 @@
     }
 
     .menu-item {
-        padding: 15px; /* Menor padding para dispositivos móveis */
+        padding: 15px; 
     }
 }
 
-/* Efeito futurista em 3D e animação de hover */
+
 @keyframes glow {
     0% { box-shadow: 0 0 8px rgba(0, 123, 255, 0.6); }
     50% { box-shadow: 0 0 16px rgba(0, 123, 255, 1); }
@@ -154,5 +153,5 @@
 }
 
 .menu-item {
-    animation: glow 3s ease-in-out infinite; /* Brilho suave */
+    animation: glow 3s ease-in-out infinite; 
 }

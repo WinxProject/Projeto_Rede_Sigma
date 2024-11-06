@@ -54,7 +54,7 @@
   
   .btn-search5 {
     padding: 10px 20px;
-    background-color: #333;
+    background: linear-gradient(135deg, #020303, #203a43, #000000);
     color: white;
     border: 1px solid #666;
     border-radius: 4px;
@@ -89,7 +89,7 @@
   .order-input-form5 button {
     width: 100%;
     padding: 12px;
-    background-color: #333;
+    background: linear-gradient(135deg, #020303, #203a43, #000000);
     color: white;
     border: 1px solid #666;
     border-radius: 4px;

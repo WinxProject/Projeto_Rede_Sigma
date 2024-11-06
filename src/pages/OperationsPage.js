@@ -1,223 +1,168 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; 
+import NavMenu from './NavMenu';
 import './OperationsPage.css';
-import NavMenu from './NavMenu'; 
 
-function OperationsPage() {
+const OperationsPage = () => {
   const [operations, setOperations] = useState([]);
-  const [operation, setOperation] = useState({
-    client: '',
-    vehicle: {
-      plate: '',
-      brand: '',
-      model: '',
-      year: '',
-      color: '',
-      chassis: ''
-    },
-    seller: '',
-    number: '',
+  const [form, setForm] = useState({
+    operationNumber: '',
     date: '',
-    type: '',
+    clientName: '',
+    vehicle: '',
+    seller: '',
+    type: '', // Compra ou Venda
   });
-  const [editingIndex, setEditingIndex] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [hasSearched, setHasSearched] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
-  const [popupVisible, setPopupVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [filteredOperations, setFilteredOperations] = useState([]);
+  const [editingIndex, setEditingIndex] = useState(null);
+  const [confirmationMessage, setConfirmationMessage] = useState('');
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   useEffect(() => {
-    const storedOperations = JSON.parse(localStorage.getItem('operations')) || [];
-    setOperations(storedOperations);
+    const savedOperations = JSON.parse(localStorage.getItem('operations')) || [];
+    setOperations(savedOperations);
   }, []);
 
-  const handleAddOperation = (e) => {
+  useEffect(() => {
+    localStorage.setItem('operations', JSON.stringify(operations));
+  }, [operations]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setForm(prevForm => ({ ...prevForm, [name]: value }));
+  };
+
+  const handleFormSubmit = (e) => {
     e.preventDefault();
-    let updatedOperations;
-
-    if (editingIndex !== null) {
-      updatedOperations = operations.map((op, index) => (index === editingIndex ? operation : op));
-      setSuccessMessage('Operação atualizada com sucesso!');
-    } else {
-      updatedOperations = [...operations, operation];
-      setSuccessMessage('Operação cadastrada com sucesso!');
+    if (form.operationNumber && form.date && form.clientName && form.vehicle && form.seller) {
+      if (editingIndex !== null) {
+        const updatedOperations = operations.map((operation, index) =>
+          index === editingIndex ? form : operation
+        );
+        setOperations(updatedOperations);
+        setEditingIndex(null);
+      } else {
+        setOperations(prevOperations => [...prevOperations, form]);
+      }
+      setForm({ operationNumber: '', date: '', clientName: '', vehicle: '', seller: '', type: '' });
+      setConfirmationMessage('Operação registrada com sucesso!');
+      setTimeout(() => setConfirmationMessage(''), 3000);
     }
-
-    setOperations(updatedOperations);
-    localStorage.setItem('operations', JSON.stringify(updatedOperations));
-    resetForm();
-  };
-
-  const handleEditOperation = (index) => {
-    setOperation(operations[index]);
-    setEditingIndex(index);
-  };
-
-  const handleDeleteOperation = (index) => {
-    const updatedOperations = operations.filter((_, i) => i !== index);
-    setOperations(updatedOperations);
-    localStorage.setItem('operations', JSON.stringify(updatedOperations));
   };
 
   const handleSearch = () => {
-    const term = searchTerm.toLowerCase();
-    const results = operations.filter(op => 
-      op.client.toLowerCase().includes(term) || 
-      op.seller.toLowerCase().includes(term) || 
-      op.number.includes(term)
+    const results = operations.filter(operation =>
+      operation.operationNumber.includes(searchQuery) ||
+      operation.date.includes(searchQuery) ||
+      operation.clientName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      operation.seller.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredOperations(results);
-    setPopupVisible(results.length > 0);
+    setIsPopupVisible(results.length > 0);
   };
 
-  const resetForm = () => {
-    setOperation({
-      client: '',
-      vehicle: { plate: '', brand: '', model: '', year: '', color: '', chassis: '' },
-      seller: '',
-      number: '',
-      date: '',
-      type: '',
-    });
-    setEditingIndex(null);
+  const handleEdit = (index) => {
+    const operationToEdit = filteredOperations[index];
+    setForm(operationToEdit);
+    setOperations(operations.filter(operation => operation !== operationToEdit));
+    setIsPopupVisible(false);
+  };
+
+  const handleDelete = (index) => {
+    setOperations(operations.filter((_, i) => i !== index));
+    setIsPopupVisible(false);
   };
 
   return (
-    <div className="operations-page">
+    <div className="operations-container">
       <NavMenu />
-      <h1>Controle de Operações</h1>
-      {successMessage && <div className="success-message">{successMessage}</div>}
-
-      <form onSubmit={handleAddOperation} className="operation-form">
-        <label>Cliente:</label>
-        <input
-          type="text"
-          value={operation.client}
-          onChange={(e) => setOperation({ ...operation, client: e.target.value })}
-          required
-        />
-        
-        <label>Tipo de Operação:</label>
-        <select
-          value={operation.type}
-          onChange={(e) => setOperation({ ...operation, type: e.target.value })}
-          required
-        >
-          <option value="">Selecione</option>
-          <option value="compra">Compra</option>
-          <option value="venda">Venda</option>
-        </select>
-
-        <fieldset>
-          <legend>Veículo</legend>
-          <input
-            type="text"
-            placeholder="Placa"
-            value={operation.vehicle.plate}
-            onChange={(e) => setOperation({ ...operation, vehicle: { ...operation.vehicle, plate: e.target.value } })}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Marca"
-            value={operation.vehicle.brand}
-            onChange={(e) => setOperation({ ...operation, vehicle: { ...operation.vehicle, brand: e.target.value } })}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Modelo"
-            value={operation.vehicle.model}
-            onChange={(e) => setOperation({ ...operation, vehicle: { ...operation.vehicle, model: e.target.value } })}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Ano"
-            value={operation.vehicle.year}
-            onChange={(e) => setOperation({ ...operation, vehicle: { ...operation.vehicle, year: e.target.value } })}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Cor"
-            value={operation.vehicle.color}
-            onChange={(e) => setOperation({ ...operation, vehicle: { ...operation.vehicle, color: e.target.value } })}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Chassi"
-            value={operation.vehicle.chassis}
-            onChange={(e) => setOperation({ ...operation, vehicle: { ...operation.vehicle, chassis: e.target.value } })}
-            required
-          />
-        </fieldset>
-
-        <label>Vendedor:</label>
-        <input
-          type="text"
-          value={operation.seller}
-          onChange={(e) => setOperation({ ...operation, seller: e.target.value })}
-          required
-        />
-
-        <label>Número da Operação:</label>
-        <input
-          type="text"
-          value={operation.number}
-          onChange={(e) => setOperation({ ...operation, number: e.target.value })}
-          required
-        />
-
-        <label>Data:</label>
-        <input
-          type="date"
-          value={operation.date}
-          onChange={(e) => setOperation({ ...operation, date: e.target.value })}
-          required
-        />
-
-        <button type="submit">
-          {editingIndex !== null ? 'Atualizar Operação' : 'Cadastrar Operação'}
-        </button>
-      </form>
+      <h1>Controle das Operações Realizadas</h1>
+      {confirmationMessage && <div className="confirmation-message">{confirmationMessage}</div>}
 
       <div className="search-container">
         <input
           type="text"
-          placeholder="Buscar Cliente ou Vendedor..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="search-input"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Buscar por número, data, cliente ou vendedor..."
         />
-        <button onClick={() => { setHasSearched(true); handleSearch(); }} className="btnbuscar">Buscar</button>
+        <button className='btnbuscar1' onClick={handleSearch}>Buscar</button>
       </div>
 
-      {popupVisible && (
-        <div className="popup">
-          <h2>Operações Encontradas</h2>
-          {filteredOperations.length > 0 ? (
-            <ul className="operations-list">
-              {filteredOperations.map((op, index) => (
-                <li key={index} className="operation-item">
-                  <span>{`Cliente: ${op.client}, Veículo: ${op.vehicle.plate}, Vendedor: ${op.seller}, Número: ${op.number}, Data: ${op.date}, Tipo: ${op.type}`}</span>
-                  <div className="operation-buttons">
-                    <button className="edit-button" onClick={() => handleEditOperation(index)}>Editar</button>
-                    <button className="delete-button" onClick={() => handleDeleteOperation(index)}>Excluir</button>
+      <form onSubmit={handleFormSubmit} className="operation-input-form">
+        <input
+          type="text"
+          name="operationNumber"
+          value={form.operationNumber}
+          onChange={handleInputChange}
+          placeholder="Número da operação"
+          required
+        />
+        <input
+          type="date"
+          name="date"
+          value={form.date}
+          onChange={handleInputChange}
+          placeholder="Data"
+          required
+        />
+        <input
+          type="text"
+          name="clientName"
+          value={form.clientName}
+          onChange={handleInputChange}
+          placeholder="Nome do Cliente"
+          required
+        />
+        <input
+          type="text"
+          name="vehicle"
+          value={form.vehicle}
+          onChange={handleInputChange}
+          placeholder="Veículo"
+          required
+        />
+        <input
+          type="text"
+          name="seller"
+          value={form.seller}
+          onChange={handleInputChange}
+          placeholder="Vendedor"
+          required
+        />
+        <select name="type" value={form.type} onChange={handleInputChange} required>
+          <option value="">Selecione o tipo de operação</option>
+          <option value="Compra">Compra</option>
+          <option value="Venda">Venda</option>
+        </select>
+        <button type="submit">Adicionar Operação</button>
+      </form>
+
+      {isPopupVisible && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <h2>Resultados da Busca</h2>
+            <ul className="operation-list">
+              {filteredOperations.map((operation, index) => (
+                <li key={index}>
+                  <div className="operation-info">Número: {operation.operationNumber}</div>
+                  <div className="operation-info">Data: {operation.date}</div>
+                  <div className="operation-info">Cliente: {operation.clientName}</div>
+                  <div className="operation-info">Veículo: {operation.vehicle}</div>
+                  <div className="operation-info">Vendedor: {operation.seller}</div>
+                  <div className="action-buttons">
+                    <button className='btneditar1' onClick={() => handleEdit(index)}>Editar</button>
+                    <button className='btnexcluir1' onClick={() => handleDelete(index)}>Excluir</button>
                   </div>
                 </li>
               ))}
             </ul>
-          ) : (
-            <p>Nenhuma operação encontrada.</p>
-          )}
-          <button onClick={() => setPopupVisible(false)}>Fechar</button>
+            <button className='btnfechar1' onClick={() => setIsPopupVisible(false)}>Fechar</button>
+          </div>
         </div>
       )}
     </div>
   );
-}
+};
 
 export default OperationsPage;
