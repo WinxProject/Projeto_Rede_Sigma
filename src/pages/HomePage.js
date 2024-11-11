@@ -1,21 +1,42 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+// src/pages/HomePage.js
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import './HomePage.css';
 
 const HomePage = ({ onLogout }) => {
-    const navigate = useNavigate(); // Hook para navegação
+    const navigate = useNavigate();
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const handleLogout = () => {
-        onLogout(); // Chama a função de logout passada como prop
-        navigate('/'); // Redireciona para a página de login
+        onLogout();
+        navigate('/');
+    };
+
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
     };
 
     return (
         <div className="home-container">
-            <h1 className="title">Sistema de Gerenciamento</h1>
-            <button className="logout-button" onClick={handleLogout}>Logout</button> {/* Botão de logout */}
+            <div className="top-menu1">
+                <h1 className="title">REDE SIGMA</h1>
+                <div className="dropdown1">
+                    <button className="dropdown-toggle1" onClick={toggleDropdown}>
+                        Cadastros
+                    </button>
+                    {isDropdownOpen && (
+                        <div className="dropdown-menu1">
+                            <Link to="/users" className="dropdown-item1">Usuários</Link>
+                            <Link to="/register" className="dropdown-item1">Novo Usuário</Link>
+                            <Link to="/parameters" className="dropdown-item1">Parâmetro</Link>
+                        </div>
+                    )}
+                </div>
+                <button className="logout-button" onClick={handleLogout}>Logout</button>
+            </div>
+
             <div className="menu-grid">
+                {/* Os outros itens do menu */}
                 <div className="menu-item">
                     <h2>Clientes</h2>
                     <p>Gerencie informações dos clientes de forma eficiente.</p>

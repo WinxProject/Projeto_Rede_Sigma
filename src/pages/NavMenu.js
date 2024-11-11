@@ -12,7 +12,7 @@ const NavMenu = () => {
 
   return (
     <nav className="nav-menu">
-      <button className="menu-toggle" onClick={toggleMenu}>
+      <button className="menu-toggle1" onClick={toggleMenu}>
         {isOpen ? 'Fechar' : 'Menu'}
       </button>
       {isOpen && (

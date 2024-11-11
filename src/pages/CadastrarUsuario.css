@@ -1,0 +1,96 @@
+.cadastro-container1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    padding-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 60px; 
+}
+
+.cadastro-container1 h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.cadastro-container1 label {
+    display: block;
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+}
+
+.cadastro-container1 input[type="text"],
+.cadastro-container1 input[type="email"],
+.cadastro-container1 input[type="password"],
+.cadastro-container1 select {
+    width: 100%;
+    padding: 0.7rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #333;
+    transition: border-color 0.3s;
+}
+
+.cadastro-container1 input[type="text"]:focus,
+.cadastro-container1 input[type="email"]:focus,
+.cadastro-container1 input[type="password"]:focus,
+.cadastro-container1 select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.cadastro-container1 select {
+    appearance: none;
+    background-color: #fff;
+}
+
+.botaocad {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #001f41a4;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.botaocad:hover {
+    background-color: #0056b3;
+}
+
+.botaocad:active {
+    background-color: #003f7f;
+}
+
+
+.link-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.link-container button {
+    background-color: #4CAF50; /* Verde para o botão */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.link-container button:hover {
+    background-color: #45a049; /* Efeito de hover */
+}

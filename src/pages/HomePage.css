@@ -17,7 +17,7 @@
 .title {
     font-size: 2.5rem; /* Diminuído para caber melhor */
     margin-bottom: 8px;
-    color: #ffffff;
+    color: #1395ff;
     letter-spacing: 1.5px;
     font-weight: 700;
     text-shadow: 0px 3px 8px rgba(0, 123, 255, 0.6); 
@@ -107,6 +107,62 @@
     color: #00f0ff;
 }
 
+/* Container do dropdown */
+.dropdown1 {
+    position: absolute; /* Posiciona o botão fora do fluxo normal, no canto superior direito */
+    top: 20px; /* Distância do topo da tela */
+    right: 20px; /* Distância da borda direita da tela */
+    z-index: 1000; /* Garante que o menu fique acima de outros elementos */
+}
+
+/* Estilo do botão de dropdown */
+.dropdown-toggle1 {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-toggle1:hover {
+    background-color: #444;
+}
+
+/* Menu suspenso */
+.dropdown-menu1 {
+    position: absolute;
+    top: 100%; /* Posiciona o menu logo abaixo do botão */
+    right: 0;
+    background-color: #1b1b1b;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    display: none; /* Inicialmente o menu não aparece */
+    z-index: 1001; /* Garante que o menu apareça acima de outros elementos */
+}
+
+/* Itens do menu */
+.dropdown-item1 {
+    display: block;
+    padding: 10px 15px;
+    color: #00d4ff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+}
+
+.dropdown-item1:hover {
+    background-color: rgba(0, 123, 255, 0.2);
+    color: #00f0ff;
+}
+
+/* Mostrar o menu ao passar o mouse ou clicar no botão */
+.dropdown1:hover .dropdown-menu1 {
+    display: block;
+}
 
 
 .logout-button {
