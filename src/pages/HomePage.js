@@ -1,9 +1,8 @@
-// src/pages/HomePage.js
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './HomePage.css';
 
-const HomePage = ({ onLogout }) => {
+const HomePage = ({ onLogout, userGroup }) => {  // Recebe userGroup como prop
     const navigate = useNavigate();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -20,18 +19,25 @@ const HomePage = ({ onLogout }) => {
         <div className="home-container">
             <div className="top-menu1">
                 <h1 className="title">REDE SIGMA</h1>
-                <div className="dropdown1">
-                    <button className="dropdown-toggle1" onClick={toggleDropdown}>
-                        Cadastros
-                    </button>
-                    {isDropdownOpen && (
-                        <div className="dropdown-menu1">
-                            <Link to="/users" className="dropdown-item1">Usuários</Link>
-                            <Link to="/register" className="dropdown-item1">Novo Usuário</Link>
-                            <Link to="/parameters" className="dropdown-item1">Parâmetro</Link>
-                        </div>
-                    )}
-                </div>
+                
+                {/* Verifica o grupo do usuário */}
+                {userGroup === 'admin' ? (
+                    <div className="dropdown1">
+                        <button className="dropdown-toggle1" onClick={toggleDropdown}>
+                            Cadastros
+                        </button>
+                        {isDropdownOpen && (
+                            <div className="dropdown-menu1">
+                                <Link to="/users" className="dropdown-item1">Usuários</Link>
+                                <Link to="/register" className="dropdown-item1">Novo Usuário</Link>
+                                <Link to="/parameters" className="dropdown-item1">Parâmetro</Link>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <p>Você não tem permissão para acessar o botão "Cadastros".</p>
+                )}
+
                 <button className="logout-button" onClick={handleLogout}>Logout</button>
             </div>
 

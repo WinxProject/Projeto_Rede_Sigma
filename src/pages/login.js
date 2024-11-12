@@ -2,13 +2,29 @@ import React, { useState } from 'react';
 import './login.css';
 
 const Login = ({ onLogin }) => {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Chama a função de login recebida via props
-        onLogin(username, password);
+
+        // Recupera os usuários cadastrados no localStorage
+        const usuariosCadastrados = JSON.parse(localStorage.getItem('usuarios')) || [];
+
+        // Verifica se o usuário existe e se a senha está correta
+        const usuarioValido = usuariosCadastrados.find(
+            (user) => user.email === email && user.senha === password
+        );
+
+        if (usuarioValido) {
+            onLogin(usuarioValido); // Passa o usuário completo (com o grupo) para onLogin
+        } else {
+            alert('E-mail ou senha incorretos, para cadastro entre em contato pelo ramal: 5050');
+        }
+    };
+
+    const handleForgotPassword = () => {
+        alert('Entre em contato com o setor de T.I para redefinição de senha:\nRamal: 5050\nFone: 92 98853-1960');
     };
 
     return (
@@ -16,11 +32,11 @@ const Login = ({ onLogin }) => {
             <h1 className="login-title">Rede Sigma</h1>
             <form className="login-form" onSubmit={handleSubmit}>
                 <input
-                    type="text"
+                    type="email"
                     className="login-input"
-                    placeholder="Usuário"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="E-mail"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                 />
                 <input
@@ -34,7 +50,9 @@ const Login = ({ onLogin }) => {
                 <button type="submit" className="login-button">
                     Entrar
                 </button>
-                <a href="#" className="forgot-password">Esqueci minha senha</a>
+                <a href="#" className="forgot-password" onClick={handleForgotPassword}>
+                    Esqueci minha senha
+                </a>
             </form>
         </div>
     );

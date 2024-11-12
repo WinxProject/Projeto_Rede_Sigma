@@ -120,7 +120,7 @@ const UsuariosPage = ({ onEditUser, onDeleteUser }) => {
                                 <div className="user-details">
                                     <p><strong>Nome:</strong> {usuario.nome}</p>
                                     <p><strong>E-mail:</strong> {usuario.email}</p>
-                                    <p><strong>Setor:</strong> {usuario.setor}</p>
+                                    <p><strong>Grupo:</strong> {usuario.setor}</p>
                                 </div>
                             )}
                             <div className="user-actions">

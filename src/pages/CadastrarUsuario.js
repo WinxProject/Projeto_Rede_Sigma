@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Importe o Link do react-router-dom
+import { Link } from 'react-router-dom';
 import NavMenu from './NavMenu';
 import './CadastrarUsuario.css';
 
@@ -13,9 +13,14 @@ const CadastrarUsuario = ({ addUser }) => {
         e.preventDefault();
 
         const novoUsuario = { nome, email, senha, setor };
-        addUser(novoUsuario);  // Adiciona o novo usuário ao estado no componente pai
+        
+        // Salva o novo usuário no localStorage
+        const usuariosCadastrados = JSON.parse(localStorage.getItem('usuarios')) || [];
+        usuariosCadastrados.push(novoUsuario);
+        localStorage.setItem('usuarios', JSON.stringify(usuariosCadastrados));
+        
+        addUser(novoUsuario); // Atualiza o estado no componente pai, se necessário
 
-        // Limpa os campos após o envio do formulário
         setNome('');
         setEmail('');
         setSenha('');
@@ -34,7 +39,6 @@ const CadastrarUsuario = ({ addUser }) => {
                     onChange={(e) => setNome(e.target.value)}
                     required
                 />
-
                 <label>E-mail:</label>
                 <input
                     type="email"
@@ -42,7 +46,6 @@ const CadastrarUsuario = ({ addUser }) => {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                 />
-
                 <label>Senha:</label>
                 <input
                     type="password"
@@ -50,17 +53,13 @@ const CadastrarUsuario = ({ addUser }) => {
                     onChange={(e) => setSenha(e.target.value)}
                     required
                 />
-
                 <label>Grupo:</label>
                 <select value={setor} onChange={(e) => setSetor(e.target.value)} required>
                     <option value="usuario">Usuário Padrão</option>
                     <option value="admin">Administrador</option>
                 </select>
-
                 <button className="botaocad" type="submit">Cadastrar</button>
             </form>
-
-            {/* Link para a página de usuários cadastrados */}
             <div className="link-container">
                 <Link to="/users">
                     <button className="botaocad">Ver Usuários Cadastrados</button>
