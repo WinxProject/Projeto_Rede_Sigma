@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import './UsuariosPage.css';
 import NavMenu from './NavMenu';
-import 'font-awesome/css/font-awesome.min.css'; // Importando a folha de estilos do Font Awesome
+import 'font-awesome/css/font-awesome.min.css';
 
 const Usuarios = ({ usuarios, onEditUser, onDeleteUser }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -136,7 +136,7 @@ const Usuarios = ({ usuarios, onEditUser, onDeleteUser }) => {
           />
           <input
             type="password"
-            placeholder="Nova Senha (deixe em branco se não for alterar)"
+            placeholder="Nova Senha(Em branco se não for alterar)"
             value={editedPassword}
             onChange={(e) => setEditedPassword(e.target.value)}
             className="edit-input"

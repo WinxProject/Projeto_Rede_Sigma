@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './HomePage.css';
 
-const HomePage = ({ onLogout, userGroup }) => {  // Recebe userGroup como prop
+const HomePage = ({ onLogout, userGroup }) => {
     const navigate = useNavigate();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [userName, setUserName] = useState('');  // Estado para armazenar o nome ou e-mail do usuário
 
     const handleLogout = () => {
         onLogout();
+        localStorage.removeItem('isAuthenticated');
+        localStorage.removeItem('userName');
         navigate('/');
     };
 
@@ -15,11 +18,21 @@ const HomePage = ({ onLogout, userGroup }) => {  // Recebe userGroup como prop
         setIsDropdownOpen(!isDropdownOpen);
     };
 
+    useEffect(() => {
+        const storedUserName = localStorage.getItem('userName');
+        if (storedUserName) {
+            setUserName(storedUserName);  // Recupera o nome ou e-mail do usuário armazenado
+        }
+    }, []);
+
     return (
         <div className="home-container">
             <div className="top-menu1">
                 <h1 className="title">REDE SIGMA</h1>
                 
+                {/* Exibe o nome ou e-mail do usuário */}
+                <p>Bem-vindo, {userName || 'Visitante'}</p> {/* Se o nome não for encontrado, exibe "Visitante" */}
+
                 {/* Verifica o grupo do usuário */}
                 {userGroup === 'admin' ? (
                     <div className="dropdown1">

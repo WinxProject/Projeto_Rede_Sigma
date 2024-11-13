@@ -17,6 +17,10 @@ const Login = ({ onLogin }) => {
         );
 
         if (usuarioValido) {
+            // Armazena o nome ou e-mail do usuário no localStorage para ser exibido na HomePage
+            localStorage.setItem('userName', usuarioValido.nome || usuarioValido.email);
+            localStorage.setItem('isAuthenticated', 'true');  // Marca o usuário como autenticado
+
             onLogin(usuarioValido); // Passa o usuário completo (com o grupo) para onLogin
         } else {
             alert('E-mail ou senha incorretos, para cadastro entre em contato pelo ramal: 5050');
