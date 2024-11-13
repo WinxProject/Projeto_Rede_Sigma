@@ -17,60 +17,79 @@ const OperationsPage = () => {
   const [editingIndex, setEditingIndex] = useState(null);
   const [confirmationMessage, setConfirmationMessage] = useState('');
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false); // Estado para o modal
 
+  // Carregar operações do localStorage ao carregar a página
   useEffect(() => {
     const savedOperations = JSON.parse(localStorage.getItem('operations')) || [];
     setOperations(savedOperations);
   }, []);
 
+  // Salvar operações no localStorage quando a lista de operações mudar
   useEffect(() => {
     localStorage.setItem('operations', JSON.stringify(operations));
   }, [operations]);
 
+  // Função para lidar com as mudanças nos inputs
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setForm(prevForm => ({ ...prevForm, [name]: value }));
   };
 
+  // Função para lidar com o envio do formulário
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (form.operationNumber && form.date && form.clientName && form.vehicle && form.seller) {
       if (editingIndex !== null) {
+        // Atualizar operação existente
         const updatedOperations = operations.map((operation, index) =>
           index === editingIndex ? form : operation
         );
         setOperations(updatedOperations);
         setEditingIndex(null);
       } else {
+        // Adicionar nova operação
         setOperations(prevOperations => [...prevOperations, form]);
       }
+      // Resetar o formulário
       setForm({ operationNumber: '', date: '', clientName: '', vehicle: '', seller: '', type: '' });
       setConfirmationMessage('Operação registrada com sucesso!');
       setTimeout(() => setConfirmationMessage(''), 3000);
     }
   };
 
+  // Função para buscar operações
   const handleSearch = () => {
-    const results = operations.filter(operation =>
-      operation.operationNumber.includes(searchQuery) ||
-      operation.date.includes(searchQuery) ||
-      operation.clientName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      operation.seller.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const results = operations.filter(operation => {
+      return (
+        (operation.operationNumber ?? '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (operation.date ?? '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (operation.clientName ?? '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (operation.seller ?? '').toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    });
     setFilteredOperations(results);
-    setIsPopupVisible(results.length > 0);
+    setIsModalVisible(results.length > 0); // Mostrar o modal se houver resultados
   };
 
+  // Função para editar operação
   const handleEdit = (index) => {
-    const operationToEdit = filteredOperations[index];
+    const operationToEdit = operations[index];
     setForm(operationToEdit);
-    setOperations(operations.filter(operation => operation !== operationToEdit));
-    setIsPopupVisible(false);
+    setEditingIndex(index);
+    setIsModalVisible(false);
   };
 
+  // Função para deletar operação
   const handleDelete = (index) => {
-    setOperations(operations.filter((_, i) => i !== index));
-    setIsPopupVisible(false);
+    const updatedOperations = operations.filter((_, i) => i !== index);
+    setOperations(updatedOperations);
+    setIsModalVisible(false);
+  };
+
+  // Função para fechar o modal
+  const closeModal = () => {
+    setIsModalVisible(false);
   };
 
   return (
@@ -86,7 +105,7 @@ const OperationsPage = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Buscar por número, data, cliente ou vendedor..."
         />
-        <button className='btnbuscar1' onClick={handleSearch}>Buscar</button>
+        <button className="btnbuscar1" onClick={handleSearch}>Buscar</button>
       </div>
 
       <form onSubmit={handleFormSubmit} className="operation-input-form">
@@ -138,10 +157,13 @@ const OperationsPage = () => {
         <button type="submit">Adicionar Operação</button>
       </form>
 
-      {isPopupVisible && (
-        <div className="popup-overlay">
-          <div className="popup-content">
-            <h2>Resultados da Busca</h2>
+      {/* Modal para exibir resultados da pesquisa */}
+      {isModalVisible && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close-button" onClick={closeModal}>&times;</span>
+            <h2>Resultados da Pesquisa</h2>
+            {filteredOperations.length === 0 && <div>Nenhum resultado encontrado.</div>}
             <ul className="operation-list">
               {filteredOperations.map((operation, index) => (
                 <li key={index}>
@@ -150,14 +172,14 @@ const OperationsPage = () => {
                   <div className="operation-info">Cliente: {operation.clientName}</div>
                   <div className="operation-info">Veículo: {operation.vehicle}</div>
                   <div className="operation-info">Vendedor: {operation.seller}</div>
+                  <div className="operation-info">Tipo: {operation.type}</div>
                   <div className="action-buttons">
-                    <button className='btneditar1' onClick={() => handleEdit(index)}>Editar</button>
-                    <button className='btnexcluir1' onClick={() => handleDelete(index)}>Excluir</button>
+                    <button className="btneditar1" onClick={() => handleEdit(index)}>Editar</button>
+                    <button className="btnexcluir1" onClick={() => handleDelete(index)}>Excluir</button>
                   </div>
                 </li>
               ))}
             </ul>
-            <button className='btnfechar1' onClick={() => setIsPopupVisible(false)}>Fechar</button>
           </div>
         </div>
       )}
