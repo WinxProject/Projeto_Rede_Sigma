@@ -43,7 +43,6 @@ const HomePage = ({ onLogout, userGroup }) => {
                             <div className="dropdown-menu1">
                                 <Link to="/users" className="dropdown-item1">Usuários</Link>
                                 <Link to="/register" className="dropdown-item1">Novo Usuário</Link>
-                                <Link to="/parameters" className="dropdown-item1">Parâmetro</Link>
                             </div>
                         )}
                     </div>
@@ -55,7 +54,7 @@ const HomePage = ({ onLogout, userGroup }) => {
             </div>
 
             <div className="menu-grid">
-                {/* Os outros itens do menu */}
+                {/* Outros itens do menu */}
                 <div className="menu-item">
                     <h2>Clientes</h2>
                     <p>Gerencie informações dos clientes de forma eficiente.</p>
@@ -81,11 +80,15 @@ const HomePage = ({ onLogout, userGroup }) => {
                     <p>Controle e visualize todas as montadoras parceiras.</p>
                     <Link to="/manufacturers" className="menu-link">Ver Montadoras</Link>
                 </div>
-                <div className="menu-item">
-                    <h2>Vendedores</h2>
-                    <p>Gerencie informações dos vendedores.</p>
-                    <Link to="/sellers" className="menu-link">Ver Vendedores</Link>
-                </div>
+                
+                {/* Verifica o grupo do usuário antes de exibir o card de Vendedores */}
+                {userGroup === 'admin' && (
+                    <div className="menu-item">
+                        <h2>Vendedores</h2>
+                        <p>Gerencie informações dos vendedores.</p>
+                        <Link to="/sellers" className="menu-link">Ver Vendedores</Link>
+                    </div>
+                )}
             </div>
         </div>
     );
