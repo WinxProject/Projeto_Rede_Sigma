@@ -1,150 +1,162 @@
-import React, { useState, useEffect } from 'react';
-import NavMenu from './NavMenu';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import './UsuariosPage.css';
+import NavMenu from './NavMenu';
+import 'font-awesome/css/font-awesome.min.css'; // Importando a folha de estilos do Font Awesome
 
-const UsuariosPage = ({ onEditUser, onDeleteUser }) => {
-    const [usuarios, setUsuarios] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [isEditing, setIsEditing] = useState(null);
-    const [editedUser, setEditedUser] = useState({});
+const Usuarios = ({ usuarios, onEditUser, onDeleteUser }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [editingUserId, setEditingUserId] = useState(null);
+  const [editedName, setEditedName] = useState('');
+  const [editedEmail, setEditedEmail] = useState('');
+  const [editedPassword, setEditedPassword] = useState('');
 
-    // Carrega os usuários do localStorage ao iniciar o componente
-    useEffect(() => {
-        const savedUsers = JSON.parse(localStorage.getItem('usuarios')) || [];
-        setUsuarios(savedUsers);
-    }, []);
+  const ID_USUARIO_PRINCIPAL = 100;
 
-    // Salva os usuários no localStorage sempre que a lista de usuários muda
-    useEffect(() => {
-        localStorage.setItem('usuarios', JSON.stringify(usuarios));
-    }, [usuarios]);
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
 
-    // Função para adicionar usuário
-    const addUser = (usuario) => {
-        const updatedUsers = [...usuarios, usuario];
-        setUsuarios(updatedUsers);
-    };
+  const handleEditClick = (usuario) => {
+    setEditingUserId(usuario.id);
+    setEditedName(usuario.nome);
+    setEditedEmail(usuario.email);
+    setEditedPassword('');
+  };
 
-    // Função para lidar com o filtro de busca
-    const handleSearch = (e) => {
-        setSearchTerm(e.target.value);
-    };
+  const handleSaveEdit = () => {
+    if (editingUserId !== null) {
+      onEditUser({ 
+        id: editingUserId, 
+        nome: editedName, 
+        email: editedEmail,
+        senha: editedPassword || null
+      });
+      setEditingUserId(null);
+    }
+  };
 
-    // Função para começar a editar um usuário
-    const handleEditClick = (usuario) => {
-        setIsEditing(usuario.id);
-        setEditedUser(usuario);
-    };
+  const handleCancelEdit = () => {
+    setEditingUserId(null);
+  };
 
-    // Função para lidar com as alterações no formulário de edição
-    const handleEditChange = (e) => {
-        const { name, value } = e.target;
-        setEditedUser((prevUser) => ({ ...prevUser, [name]: value }));
-    };
+  const handleDeleteClick = (userId) => {
+    if (userId === ID_USUARIO_PRINCIPAL) {
+      alert('Este usuário não pode ser excluído porque é o usuário principal.');
+      return;
+    }
+    if (window.confirm('Tem certeza que deseja excluir este usuário?')) {
+      onDeleteUser(userId);
+    }
+  };
 
-    // Função para salvar as alterações de edição
-    const handleSaveEdit = () => {
-        const updatedUsers = usuarios.map((user) =>
-            user.id === editedUser.id ? editedUser : user
-        );
-        setUsuarios(updatedUsers);
-        setIsEditing(null);
-        setEditedUser({});
-    };
-
-    // Função para cancelar a edição
-    const handleCancelEdit = () => {
-        setIsEditing(null);
-        setEditedUser({});
-    };
-
-    // Função para confirmar exclusão de usuário
-    const handleDeleteClick = (userId) => {
-        const confirmDelete = window.confirm("Tem certeza que deseja excluir este usuário?");
-        if (confirmDelete) {
-            const updatedUsers = usuarios.filter((user) => user.id !== userId);
-            setUsuarios(updatedUsers);
-        }
-    };
-
-    // Filtrar usuários com base no termo de pesquisa
-    const filteredUsers = usuarios.filter((usuario) =>
-        usuario.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        usuario.email.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
+  const filteredUsuarios = usuarios.filter((usuario) => {
+    const nome = usuario.nome || '';
+    const email = usuario.email || '';
     return (
-        <div className="usuarios-container">
-            <NavMenu />
-            <h2>Usuários Cadastrados</h2>
-            
-            <input
-                type="text"
-                placeholder="Pesquisar por nome ou e-mail..."
-                value={searchTerm}
-                onChange={handleSearch}
-                className="search-input"
-            />
-
-            {filteredUsers.length > 0 ? (
-                <ul className="user-list">
-                    {filteredUsers.map((usuario) => (
-                        <li key={usuario.id} className="user-item">
-                            {isEditing === usuario.id ? (
-                                <div className="edit-user-form">
-                                    <input
-                                        type="text"
-                                        name="nome"
-                                        value={editedUser.nome}
-                                        onChange={handleEditChange}
-                                        placeholder="Nome"
-                                    />
-                                    <input
-                                        type="text"
-                                        name="email"
-                                        value={editedUser.email}
-                                        onChange={handleEditChange}
-                                        placeholder="E-mail"
-                                    />
-                                    <input
-                                        type="text"
-                                        name="setor"
-                                        value={editedUser.setor}
-                                        onChange={handleEditChange}
-                                        placeholder="Setor"
-                                    />
-                                    <button onClick={handleSaveEdit} className="save-btn">Salvar</button>
-                                    <button onClick={handleCancelEdit} className="cancel-btn">Cancelar</button>
-                                </div>
-                            ) : (
-                                <div className="user-details">
-                                    <p><strong>Nome:</strong> {usuario.nome}</p>
-                                    <p><strong>E-mail:</strong> {usuario.email}</p>
-                                    <p><strong>Grupo:</strong> {usuario.setor}</p>
-                                </div>
-                            )}
-                            <div className="user-actions">
-                                {isEditing !== usuario.id && (
-                                    <button 
-                                        className="edit-btn" 
-                                        onClick={() => handleEditClick(usuario)}>
-                                        Editar
-                                    </button>
-                                )}
-                                <button 
-                                    className="delete-btn" 
-                                    onClick={() => handleDeleteClick(usuario.id)}>
-                                    Excluir
-                                </button>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>Nenhum usuário encontrado.</p>
-            )}
-        </div>
+      nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      email.toLowerCase().includes(searchTerm.toLowerCase())
     );
+  });
+
+  return (
+    <div className="usuarios-container">
+      <NavMenu />
+      <h2>Usuários Cadastrados</h2>
+
+      {/* Botão com ícone para Cadastro de Novo Usuário */}
+      <Link to="/register">
+        <button className="novo-usuario-button">
+          <i className="fa fa-plus" aria-hidden="true"></i> Novo Usuário
+        </button>
+      </Link>
+
+      {/* Barra de Pesquisa */}
+      <input
+        type="text"
+        placeholder="Pesquisar por nome ou e-mail"
+        value={searchTerm}
+        onChange={handleSearchChange}
+        className="search-input"
+      />
+
+      <table className="usuarios-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Grupo</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredUsuarios.map((usuario) => (
+            <tr key={usuario.id}>
+              <td>{usuario.id}</td>
+              <td>{usuario.nome}</td>
+              <td>{usuario.email}</td>
+              <td>{usuario.setor === 'admin' ? 'Administrador' : 'Usuário Padrão'}</td>
+              <td>
+                <button 
+                  className="edit-button" 
+                  onClick={() => handleEditClick(usuario)}
+                >
+                  Editar
+                </button>
+                <button 
+                  className="delete-button" 
+                  onClick={() => handleDeleteClick(usuario.id)}
+                  disabled={usuario.id === ID_USUARIO_PRINCIPAL}
+                >
+                  Excluir
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {editingUserId !== null && (
+        <div className="edit-modal">
+          <h3>Editando Usuário</h3>
+          <input
+            type="text"
+            placeholder="Nome"
+            value={editedName}
+            onChange={(e) => setEditedName(e.target.value)}
+            className="edit-input"
+          />
+          <input
+            type="email"
+            placeholder="E-mail"
+            value={editedEmail}
+            onChange={(e) => setEditedEmail(e.target.value)}
+            className="edit-input"
+          />
+          <input
+            type="password"
+            placeholder="Nova Senha (deixe em branco se não for alterar)"
+            value={editedPassword}
+            onChange={(e) => setEditedPassword(e.target.value)}
+            className="edit-input"
+          />
+          <button 
+            className="save-button" 
+            onClick={handleSaveEdit}
+          >
+            Salvar
+          </button>
+          <button 
+            className="cancel-button" 
+            onClick={handleCancelEdit}
+          >
+            Cancelar
+          </button>
+        </div>
+      )}
+    </div>
+  );
 };
 
-export default UsuariosPage;
+export default Usuarios;

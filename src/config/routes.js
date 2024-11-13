@@ -13,7 +13,7 @@ import UsuariosPage from '../pages/UsuariosPage';
 
 const RoutesConfig = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [userGroup, setUserGroup] = useState(''); // Novo estado para o grupo do usuário
+    const [userGroup, setUserGroup] = useState('');
     const [usuarios, setUsuarios] = useState([]);
 
     useEffect(() => {
@@ -35,9 +35,9 @@ const RoutesConfig = () => {
     const handleLogin = (usuario) => {
         if (usuario) {
             setIsAuthenticated(true);
-            setUserGroup(usuario.setor); // Armazena o grupo do usuário
+            setUserGroup(usuario.setor);
             localStorage.setItem('isAuthenticated', 'true');
-            localStorage.setItem('userGroup', usuario.setor); // Armazena o grupo no localStorage
+            localStorage.setItem('userGroup', usuario.setor);
         } else {
             alert('E-mail ou senha incorretos');
         }
@@ -45,7 +45,7 @@ const RoutesConfig = () => {
 
     const handleLogout = () => {
         setIsAuthenticated(false);
-        setUserGroup(''); // Limpa o grupo ao sair
+        setUserGroup('');
         localStorage.removeItem('isAuthenticated');
         localStorage.removeItem('userGroup');
     };
@@ -78,7 +78,10 @@ const RoutesConfig = () => {
                 <Route path="/orders" element={isAuthenticated ? <OrdersPage /> : <Navigate to="/" />} />
                 <Route path="/manufacturers" element={isAuthenticated ? <ManufacturersPage /> : <Navigate to="/" />} />
                 <Route path="/sellers" element={isAuthenticated ? <SellersPage /> : <Navigate to="/" />} />
+                
+                {/* Rota de Cadastro de Usuário */}
                 <Route path="/register" element={isAuthenticated ? <CadastrarUsuario addUser={addUser} /> : <Navigate to="/" />} />
+                
                 <Route
                     path="/users"
                     element={

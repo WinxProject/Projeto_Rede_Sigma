@@ -3,6 +3,15 @@ import { Link } from 'react-router-dom';
 import NavMenu from './NavMenu';
 import './CadastrarUsuario.css';
 
+// Função para gerar um ID único de 3 dígitos
+const gerarIdUnico = (usuariosCadastrados) => {
+    let novoId;
+    do {
+        novoId = Math.floor(100 + Math.random() * 900); // Gera um número aleatório entre 100 e 999
+    } while (usuariosCadastrados.some(usuario => usuario.id === novoId)); // Garante que o ID seja único
+    return novoId;
+};
+
 const CadastrarUsuario = ({ addUser }) => {
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
@@ -12,19 +21,41 @@ const CadastrarUsuario = ({ addUser }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const novoUsuario = { nome, email, senha, setor };
-        
-        // Salva o novo usuário no localStorage
+        // Recupera usuários cadastrados do localStorage
         const usuariosCadastrados = JSON.parse(localStorage.getItem('usuarios')) || [];
-        usuariosCadastrados.push(novoUsuario);
-        localStorage.setItem('usuarios', JSON.stringify(usuariosCadastrados));
-        
-        addUser(novoUsuario); // Atualiza o estado no componente pai, se necessário
 
-        setNome('');
-        setEmail('');
-        setSenha('');
-        setSetor('usuario');
+        // Verifica se o e-mail já está em uso
+        if (usuariosCadastrados.some(usuario => usuario.email === email)) {
+            // Exibe um alerta se o e-mail já estiver em uso
+            window.alert('Este e-mail já está em uso.');
+            return;
+        }
+
+        // Gera um ID único
+        const idUnico = gerarIdUnico(usuariosCadastrados);
+
+        // Cria o novo usuário
+        const novoUsuario = { id: idUnico, nome, email, senha, setor };
+
+        // Exibe a caixa de confirmação
+        const confirmacao = window.confirm('Tem certeza que deseja cadastrar este usuário?');
+
+        if (confirmacao) {
+            // Salva o novo usuário no localStorage
+            usuariosCadastrados.push(novoUsuario);
+            localStorage.setItem('usuarios', JSON.stringify(usuariosCadastrados));
+
+            addUser(novoUsuario); // Atualiza o estado no componente pai, se necessário
+
+            // Limpa os campos
+            setNome('');
+            setEmail('');
+            setSenha('');
+            setSetor('usuario');
+        } else {
+            // Caso o usuário não confirme, não faz nada
+            window.alert('Cadastro cancelado.');
+        }
     };
 
     return (
