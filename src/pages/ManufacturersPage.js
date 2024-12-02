@@ -26,7 +26,7 @@ const ManufacturersPage = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setManufacturerForm(prevForm => ({ ...prevForm, [name]: value }));
+    setManufacturerForm(prevForm => ({ ...prevForm, [name]: value.toUpperCase() }));
   };
 
   const handleFormSubmit = (e) => {

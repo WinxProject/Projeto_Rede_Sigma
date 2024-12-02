@@ -16,11 +16,9 @@ const RoutesConfig = () => {
     const [userGroup, setUserGroup] = useState('');
     const [usuarios, setUsuarios] = useState([]);
 
-    // Recuperando o estado de autenticação e dados do usuário
     useEffect(() => {
         const storedAuth = localStorage.getItem('isAuthenticated');
         const storedUserGroup = localStorage.getItem('userGroup');
-        
         if (storedAuth === 'true') {
             setIsAuthenticated(true);
             setUserGroup(storedUserGroup || '');
@@ -30,7 +28,6 @@ const RoutesConfig = () => {
         setUsuarios(savedUsers);
     }, []);
 
-    // Salvando alterações nos usuários no localStorage
     useEffect(() => {
         if (usuarios.length > 0) {
             localStorage.setItem('usuarios', JSON.stringify(usuarios));
@@ -71,10 +68,29 @@ const RoutesConfig = () => {
 
     return (
         <Routes>
+            {/* Página inicial */}
             <Route
                 path="/"
                 element={isAuthenticated ? <Navigate to="/home" /> : <Login onLogin={handleLogin} />}
             />
+            
+            {/* Páginas públicas */}
+            <Route
+                path="/login"
+                element={!isAuthenticated ? <Login onLogin={handleLogin} /> : <Navigate to="/home" />}
+            />
+            <Route
+                path="/register"
+                element={
+                    isAuthenticated && userGroup === 'admin' ? (
+                        <CadastrarUsuario addUser={addUser} />
+                    ) : (
+                        <Navigate to="/" />
+                    )
+                }
+            />
+
+            {/* Páginas protegidas */}
             <Route
                 path="/home"
                 element={isAuthenticated ? (
@@ -106,10 +122,6 @@ const RoutesConfig = () => {
             <Route
                 path="/sellers"
                 element={isAuthenticated ? <SellersPage /> : <Navigate to="/" />}
-            />
-            <Route
-                path="/register"
-                element={isAuthenticated ? <CadastrarUsuario addUser={addUser} /> : <Navigate to="/" />}
             />
             <Route
                 path="/users"

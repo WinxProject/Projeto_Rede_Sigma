@@ -5,18 +5,56 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
+    margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #2e2e2e, #121212); /* Fundo escuro com gradiente moderno */
     font-family: 'Poppins', sans-serif;
     box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
 }
+
+
+.login-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: -2;
+    animation: slide-background 25s infinite;
+}
+
+
+@keyframes slide-background {
+    0% {
+        background-image: url('https://media.istockphoto.com/id/171238132/es/foto/moderno-gen%C3%A9rico-entrada-de-productos.jpg?s=612x612&w=0&k=20&c=ZUjqKf5sO1S0K-CeosN1DDVEBQdOol1W11SFA4RKbwk=');
+    }
+    33% {
+        background-image: url('https://carolcunha.design/wp-content/uploads/2022/06/experiencia-do-cliente-loja-de-carros-4.jpg');
+    }
+    66% {
+        background-image: url('https://webseminovos.blob.core.windows.net/noticia-original/O_980f2eb0-f3ad-4b6a-95d1-47e9f5d0abcf.jpg');
+    }
+    100% {
+        background-image: url('https://media.istockphoto.com/id/171238132/es/foto/moderno-gen%C3%A9rico-entrada-de-productos.jpg?s=612x612&w=0&k=20&c=ZUjqKf5sO1S0K-CeosN1DDVEBQdOol1W11SFA4RKbwk=');
+    }
+}
+
+.login-container::before {
+    filter: brightness(0.9);
+    transition: background-image 50s ease-in-out;
+}
+
 
 /* Título do login */
 .login-title {
     font-size: 2.5rem;
     margin-bottom: 20px;
-    color: rgb(0, 101, 209);
-    box-shadow: 0 4px 20px rgba(0, 123, 255, 0.6); 
+    color: rgb(170, 170, 170);
+    box-shadow: 0 4px 20px rgba(250, 250, 250, 0.6);
     letter-spacing: 1.5px;
     font-weight: 700;
     text-shadow: 0px 3px 8px rgba(0, 0, 0, 0.6);
@@ -24,21 +62,21 @@
     border-radius: 10px;
     padding-left: 20px;
     padding-right: 20px;
-    
-    
-
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo transparente para destacar o texto */
 }
 
+/* Formulário de login */
 .login-form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: linear-gradient(145deg, #1b1b1b, #2c2c2c); /* Fundo do formulário */
+    background: rgba(82, 71, 71, 0.8); 
     border-radius: 20px;
     padding: 40px;
-    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5), -10px -10px 30px rgba(100, 100, 100, 0.1);
+    box-shadow: 10px 10px 30px rgba(49, 46, 49, 0.5), -10px -10px 30px rgba(100, 100, 100, 0.1);
     max-width: 400px;
     width: 100%;
+    z-index: 1;
 }
 
 /* Estilo dos campos de input */
@@ -46,7 +84,7 @@
     width: 100%;
     padding: 12px 20px;
     margin-bottom: 20px;
-    background: #121212;
+    background: #2b2b2b;
     color: #fff;
     border: none;
     border-radius: 30px;
@@ -54,52 +92,89 @@
     font-size: 1rem;
     outline: none;
     transition: box-shadow 0.3s ease;
+    font-family: 'Poppins', sans-serif;
 }
 
 .login-input:focus {
-    box-shadow: inset 3px 3px 8px rgba(0, 123, 255, 0.6); /* Brilho ao focar */
+    box-shadow: inset 3px 3px 8px rgba(0, 123, 255, 0.6);
 }
 
-
+/* Botão de login */
 .login-button {
     width: 100%;
     padding: 12px 20px;
-    background-color: #0051a8;
+    background: rgba(82, 71, 71, 0.8);
     color: white;
     border: none;
     border-radius: 30px;
     font-size: 1.2rem;
+    font-family: 'Poppins', sans-serif;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(0, 123, 255, 0.6); /* Sombra suave */
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.6);
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .login-button:hover {
     background-color: #0056b3;
-    transform: translateY(-3px); /* Efeito de hover com leve subida */
+    transform: translateY(-3px);
 }
 
 /* Link de esqueci a senha */
 .forgot-password {
     margin-top: 15px;
-    color: #00d4ff;
+    color: #ffffff;
     text-decoration: none;
     font-size: 0.9rem;
     transition: color 0.3s ease;
+    font-family: 'Poppins', sans-serif;
 }
 
 .forgot-password:hover {
-    color: #00f0ff; /* Efeito de hover com cor neon */
+    color: #00f0ff;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
-    .login-title {
-        font-size: 2rem; /* Reduz o tamanho do título no mobile */
+    .login-form {
+        padding: 20px;
+        max-width: 90%;
+        border-radius: 15px;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(100, 100, 100, 0.1);
     }
 
+    .login-input {
+        font-size: 0.9rem;
+        padding: 10px 15px;
+    }
+
+    .login-button {
+        font-size: 1rem;
+        padding: 10px 15px;
+    }
+
+    .forgot-password {
+        font-size: 0.8rem;
+    }
+}
+
+/* Responsividade para telas muito pequenas (ex: smartphones) */
+@media (max-width: 480px) {
     .login-form {
-        padding: 20px; /* Ajuste de padding para telas menores */
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .login-input {
+        font-size: 0.8rem;
+        padding: 8px 10px;
+    }
+
+    .login-button {
+        font-size: 0.9rem;
+        padding: 10px 12px;
+    }
+
+    .forgot-password {
+        font-size: 0.7rem;
     }
 }

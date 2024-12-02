@@ -30,7 +30,7 @@ const VehiclesPage = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setVehicleForm(prevForm => ({ ...prevForm, [name]: value }));
+    setVehicleForm(prevForm => ({ ...prevForm, [name]: value.toUpperCase() }));
   };
 
   const handleFormSubmit = (e) => {

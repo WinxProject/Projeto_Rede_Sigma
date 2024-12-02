@@ -5,6 +5,7 @@ body {
   min-height: 100vh;
   color: #e0e0e0;
   font-family: 'Courier New', Courier, monospace;
+
 }
 
 
@@ -69,10 +70,8 @@ body::after {
   border-radius: 10px;
   position: relative;
   z-index: 1;
+  margin-top: 70px;
 }
-
-
-
 
 .confirmation-message {
   background-color: #4CAF50;
